@@ -165,8 +165,7 @@ jobs:
           *Workflow run: [${{ github.run_id }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})*" \
             --base main \
             --head ${{ steps.branch.outputs.branch_name }} \
-            --label "documentation" \
-            --label "automated"
+            --label "documentation"
       
       - name: Direct commit (if skip_pr is true)
         if: steps.check-changes.outputs.has_changes == 'true' && inputs.skip_pr
