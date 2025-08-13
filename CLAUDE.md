@@ -4,16 +4,17 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a React Native mobile application for an esports center management system. The app provides tournament management, player profiles, team coordination, and real-time match tracking capabilities.
+This is a React Native Expo Go mobile application for esports live stream discovery and viewing. The app provides real-time stream browsing, user authentication, and video streaming capabilities for esports content.
 
 ## Technology Stack
 
-- **Framework**: React Native 0.73+ with TypeScript
-- **Navigation**: React Navigation v6
-- **State Management**: Redux Toolkit with Redux Persist
-- **UI Components**: React Native Elements + Custom styled components
-- **API Client**: Axios with interceptors for auth
-- **Testing**: Jest, React Native Testing Library, Detox for E2E
+- **Framework**: React Native 0.73+ with Expo 50 and TypeScript
+- **Navigation**: Expo Router (file-based routing)
+- **Authentication**: Clerk with expo-secure-store for token management
+- **State Management**: React Query (@tanstack/react-query)
+- **UI Components**: React Native core components with custom styled components
+- **Video Streaming**: expo-av for video playback
+- **Testing**: Jest for unit tests, planned Playwright for E2E
 - **CI/CD**: GitHub Actions with automated testing and deployment
 - **Platform Support**: iOS 13+ and Android 8+ (API 26+)
 
@@ -21,20 +22,22 @@ This is a React Native mobile application for an esports center management syste
 
 ```
 esport_center/
-├── src/
-│   ├── components/        # Reusable UI components
-│   ├── screens/           # Screen components (one per route)
-│   ├── navigation/        # Navigation configuration
-│   ├── services/          # API clients and external services
-│   ├── store/            # Redux store, slices, and actions
-│   ├── hooks/            # Custom React hooks
-│   ├── utils/            # Helper functions and utilities
-│   ├── types/            # TypeScript type definitions
-│   └── constants/        # App constants and configuration
-├── ios/                  # iOS native code and configuration
-├── android/              # Android native code and configuration
-├── __tests__/           # Test files
-└── assets/              # Images, fonts, and other static assets
+├── app/                   # Expo Router app directory
+│   ├── (auth)/           # Authentication screens group
+│   │   ├── login.tsx     # Login screen
+│   │   └── signup.tsx    # Sign up screen
+│   ├── (tabs)/           # Tab navigation group
+│   │   ├── _layout.tsx   # Tab layout with auth protection
+│   │   ├── esport.tsx    # Main stream discovery screen
+│   │   └── profile.tsx   # User profile screen
+│   └── _layout.tsx       # Root layout with providers
+├── components/           # Reusable UI components (planned)
+├── hooks/               # Custom React hooks (planned)
+├── utils/               # Helper functions and utilities (planned)
+├── types/               # TypeScript type definitions (planned)
+├── constants/           # App constants and configuration (planned)
+├── __tests__/          # Test files
+└── assets/             # Images, fonts, and other static assets
 ```
 
 ## Development Commands
@@ -42,19 +45,16 @@ esport_center/
 ### Setup and Installation
 ```bash
 # Install dependencies
-npm install
+npm install --legacy-peer-deps
 
-# iOS specific setup
-cd ios && pod install && cd ..
-
-# Setup environment variables
-cp .env.example .env
-# Edit .env with your configuration
+# Setup environment variables for Clerk authentication
+# Create .env file with:
+# EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
 ```
 
 ### Running the Application
 ```bash
-# Start Metro bundler
+# Start Expo development server
 npm start
 
 # Run on iOS simulator
@@ -63,9 +63,11 @@ npm run ios
 # Run on Android emulator
 npm run android
 
-# Run on specific device
-npm run ios --device "iPhone 15 Pro"
-npm run android --deviceId emulator-5554
+# Run on web (limited support)
+npm run web
+
+# Start with specific tunnel
+npx expo start --tunnel
 ```
 
 ### Testing
@@ -79,30 +81,23 @@ npm run test:watch
 # Run tests with coverage
 npm run test:coverage
 
-# Run E2E tests
-npm run e2e:ios
-npm run e2e:android
-
 # Run specific test file
 npm test -- components/Button.test.tsx
 ```
 
 ### Building and Deployment
 ```bash
-# Build iOS release
+# Build for Expo Go development
+npm run build
+
+# Build for iOS production (requires EAS)
 npm run build:ios
 
-# Build Android APK
+# Build for Android production (requires EAS)
 npm run build:android
 
-# Build Android AAB for Play Store
-cd android && ./gradlew bundleRelease
-
-# Deploy to TestFlight
-npm run deploy:ios:beta
-
-# Deploy to Google Play Internal Testing
-npm run deploy:android:beta
+# Export for web deployment
+npx expo export --platform web
 ```
 
 ### Code Quality
@@ -122,280 +117,273 @@ npm run format
 
 ## Architecture Patterns
 
-### Component Structure
+### Screen Component Structure
 ```typescript
-// src/components/PlayerCard/PlayerCard.tsx
-import React, { memo } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { Player } from '@/types';
+// app/(tabs)/esport.tsx
+import React, { useState } from 'react';
+import { View, Text, FlatList, StyleSheet, SafeAreaView } from 'react-native';
+import { useRouter } from 'expo-router';
 
-interface PlayerCardProps {
-  player: Player;
-  onPress?: (player: Player) => void;
-}
+export default function EsportScreen() {
+  const router = useRouter();
+  const [streams, setStreams] = useState(MOCK_STREAMS);
 
-export const PlayerCard = memo<PlayerCardProps>(({ player, onPress }) => {
+  const handleStreamPress = (streamId: string) => {
+    router.push(`/stream/${streamId}`);
+  };
+
   return (
-    <View style={styles.container}>
-      {/* Component implementation */}
-    </View>
+    <SafeAreaView style={styles.container}>
+      {/* Screen implementation */}
+    </SafeAreaView>
   );
-});
+}
 
 const styles = StyleSheet.create({
   container: {
-    // Styles
+    flex: 1,
+    backgroundColor: '#0a0a0a',
   }
 });
 ```
 
-### Custom Hook Pattern
+### Authentication Hook Pattern
 ```typescript
-// src/hooks/usePlayer.ts
-import { useSelector, useDispatch } from 'react-redux';
-import { useCallback, useEffect } from 'react';
-import { fetchPlayer } from '@/store/slices/playerSlice';
+// Using Clerk authentication
+import { useAuth, useUser } from '@clerk/clerk-expo';
 
-export const usePlayer = (playerId: string) => {
-  const dispatch = useDispatch();
-  const player = useSelector(state => state.players.entities[playerId]);
-  const loading = useSelector(state => state.players.loading);
+export default function ProfileScreen() {
+  const { signOut } = useAuth();
+  const { user } = useUser();
   
-  useEffect(() => {
-    dispatch(fetchPlayer(playerId));
-  }, [playerId, dispatch]);
+  const handleSignOut = async () => {
+    await signOut();
+    router.replace('/(auth)/login');
+  };
   
-  return { player, loading };
+  return (
+    <View>
+      <Text>{user?.emailAddresses[0]?.emailAddress}</Text>
+    </View>
+  );
+}
+```
+
+### Data Fetching with React Query
+```typescript
+// Future pattern for API integration
+import { useQuery } from '@tanstack/react-query';
+
+const useStreams = () => {
+  return useQuery({
+    queryKey: ['streams'],
+    queryFn: async () => {
+      // API call to fetch streams
+      const response = await fetch('/api/streams');
+      return response.json();
+    },
+    staleTime: 1000 * 60 * 5, // 5 minutes
+  });
 };
 ```
 
-### Service Layer Pattern
+## Current Features Implemented
+
+### Authentication System
+- **Clerk Integration**: Complete email/password authentication
+- **Secure Token Storage**: Uses expo-secure-store for token caching
+- **Protected Routes**: Tab navigation redirects to login if unauthenticated
+- **Email Verification**: Two-step signup process with email verification
+
+### Navigation Structure
+- **Expo Router**: File-based routing with grouped routes
+- **Tab Navigation**: Two main tabs (Esport and Profile)
+- **Auth Flow**: Separate authentication screens outside main navigation
+
+### Stream Discovery
+- **Mock Data System**: Realistic esports stream data for development
+- **Search Functionality**: Filter streams by title, creator, or game
+- **Pull-to-Refresh**: Simulated data refresh capability
+- **Performance Optimized**: FlatList with proper render optimization
+
+### User Interface
+- **Dark Gaming Theme**: Optimized for video content viewing
+- **Consistent Design**: Gaming green accent (#00ff88) throughout
+- **Responsive Layout**: Mobile-first design with proper safe areas
+- **Professional Styling**: Clean, modern interface without distractions
+
+## Future Development Roadmap
+
+### Planned Features
+- **Video Player Integration**: expo-av video streaming implementation
+- **Individual Stream Pages**: Detailed stream viewing experience
+- **Real API Integration**: Replace mock data with live streaming APIs
+- **Enhanced Profile Settings**: User preferences and account management
+- **Push Notifications**: Live stream alerts and updates
+- **Offline Support**: Cache streams and enable offline viewing
+
+### Testing Strategy
 ```typescript
-// src/services/api/playerService.ts
-import { apiClient } from '@/services/api/client';
-import { Player } from '@/types';
-
-export class PlayerService {
-  static async getPlayer(id: string): Promise<Player> {
-    const { data } = await apiClient.get(`/players/${id}`);
-    return data;
-  }
-  
-  static async updatePlayer(id: string, updates: Partial<Player>): Promise<Player> {
-    const { data } = await apiClient.patch(`/players/${id}`, updates);
-    return data;
-  }
-}
-```
-
-## Native Module Integration
-
-### iOS Native Module
-```objective-c
-// ios/ESportCenterModule.m
-#import <React/RCTBridgeModule.h>
-
-@interface ESportCenterModule : NSObject <RCTBridgeModule>
-@end
-
-@implementation ESportCenterModule
-RCT_EXPORT_MODULE();
-
-RCT_EXPORT_METHOD(processMatch:(NSString *)matchId
-                  resolver:(RCTPromiseResolveBlock)resolve
-                  rejecter:(RCTPromiseRejectBlock)reject)
-{
-  // Native implementation
-}
-@end
-```
-
-### Android Native Module
-```java
-// android/src/main/java/com/esportcenter/ESportCenterModule.java
-package com.esportcenter;
-
-import com.facebook.react.bridge.*;
-
-public class ESportCenterModule extends ReactContextBaseJavaModule {
-  @Override
-  public String getName() {
-    return "ESportCenterModule";
-  }
-  
-  @ReactMethod
-  public void processMatch(String matchId, Promise promise) {
-    // Native implementation
-  }
-}
-```
-
-## Testing Patterns
-
-### Component Testing
-```typescript
-// __tests__/components/PlayerCard.test.tsx
+// __tests__/screens/EsportScreen.test.tsx
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
-import { PlayerCard } from '@/components/PlayerCard';
+import EsportScreen from '@/app/(tabs)/esport';
 
-describe('PlayerCard', () => {
-  it('displays player information', () => {
-    const player = { id: '1', name: 'John Doe', rank: 'Diamond' };
-    const { getByText } = render(<PlayerCard player={player} />);
+describe('EsportScreen', () => {
+  it('displays stream list', () => {
+    const { getByText } = render(<EsportScreen />);
     
-    expect(getByText('John Doe')).toBeTruthy();
-    expect(getByText('Diamond')).toBeTruthy();
-  });
-});
-```
-
-### E2E Testing
-```typescript
-// e2e/tournament.test.ts
-describe('Tournament Flow', () => {
-  beforeAll(async () => {
-    await device.launchApp();
+    expect(getByText('League of Legends')).toBeTruthy();
+    expect(getByText('ProGamer_2024')).toBeTruthy();
   });
   
-  it('should create a new tournament', async () => {
-    await element(by.id('create-tournament-button')).tap();
-    await element(by.id('tournament-name-input')).typeText('Spring Championship');
-    await element(by.id('submit-button')).tap();
+  it('filters streams by search query', () => {
+    const { getByPlaceholderText, getByText } = render(<EsportScreen />);
+    const searchInput = getByPlaceholderText('Search streams, games, or creators');
     
-    await expect(element(by.text('Spring Championship'))).toBeVisible();
+    fireEvent.changeText(searchInput, 'Valorant');
+    expect(getByText('Valorant')).toBeTruthy();
   });
 });
 ```
 
 ## Performance Optimization
 
-### List Optimization
-- Use `FlatList` for large lists with `getItemLayout` when possible
-- Implement `keyExtractor` for stable keys
-- Use `removeClippedSubviews` and `maxToRenderPerBatch`
-- Optimize `renderItem` with `memo` and `useCallback`
+### Current Optimizations Implemented
+- **FlatList Performance**: Configured with `removeClippedSubviews`, `maxToRenderPerBatch`, and `windowSize`
+- **Component Optimization**: Stream cards optimized for rendering performance
+- **Stable Keys**: Proper `keyExtractor` implementation for stream lists
+- **Dark Theme**: Reduces battery usage on OLED screens
 
-### Image Optimization
-- Use `react-native-fast-image` for image caching
-- Implement lazy loading for images
-- Use appropriate image formats (WebP for Android, HEIC for iOS)
-- Resize images on the server side
+### Future Optimizations
+- **Image Caching**: Implement expo-image for better image performance
+- **Video Streaming**: Optimize expo-av for smooth video playback
+- **Bundle Splitting**: Code splitting for better app startup times
+- **Memory Management**: Efficient handling of video streams and thumbnails
 
-### Bundle Optimization
-- Enable Hermes for Android
-- Use React Native's RAM bundles
-- Implement code splitting with dynamic imports
-- Remove unused dependencies and dead code
+### Expo-Specific Optimizations
+- **Over-the-Air Updates**: Use Expo Updates for faster deployments
+- **Asset Optimization**: Optimize images and videos for mobile viewing
+- **Network Caching**: React Query for efficient data caching
+- **Expo Router**: File-based routing for better performance
 
-## Security Best Practices
+## Security Implementation
 
-### API Security
-- Store API keys in react-native-config or react-native-dotenv
-- Implement certificate pinning for production
-- Use secure storage (Keychain/Keystore) for sensitive data
-- Implement proper JWT token refresh logic
+### Current Security Measures
+- **Clerk Authentication**: Industry-standard OAuth implementation
+- **Secure Token Storage**: expo-secure-store for iOS Keychain/Android Keystore
+- **Environment Variables**: Proper handling of sensitive configuration
+- **Protected Routes**: Authentication required for main app features
 
-### App Security
-- Enable ProGuard/R8 for Android production builds
-- Implement jailbreak/root detection
-- Use react-native-obfuscating-transformer for code obfuscation
-- Disable debugging in production builds
+### Production Security Checklist
+- **Expo EAS Build**: Secure cloud builds with proper signing
+- **API Key Management**: Environment-based configuration
+- **Session Management**: Automatic token refresh with Clerk
+- **Input Validation**: Sanitization of user inputs
 
-## Platform-Specific Considerations
+### Future Security Enhancements
+- **Certificate Pinning**: For production API calls
+- **Biometric Authentication**: Face ID/Touch ID integration
+- **Device Security**: Root/jailbreak detection
+- **Content Security**: Video stream encryption for premium content
 
-### iOS Specific
-- Handle notch and safe areas with SafeAreaView
-- Implement proper keyboard avoidance
-- Support Dark Mode with dynamic colors
-- Handle iOS 14+ App Tracking Transparency
+## Platform-Specific Implementation
 
-### Android Specific
-- Handle back button with BackHandler
-- Implement proper status bar handling
-- Support different screen densities
-- Handle Android 12+ splash screen API
+### Current Expo Implementation
+- **Universal SafeAreaView**: Proper safe area handling across all devices
+- **Status Bar Configuration**: Dark theme with proper status bar styling
+- **Keyboard Handling**: KeyboardAvoidingView in authentication screens
+- **Navigation Gestures**: Native navigation feel with Expo Router
+
+### iOS Considerations
+- **Face ID/Touch ID**: Future biometric authentication support
+- **Picture-in-Picture**: Video playback in background
+- **App Store Guidelines**: Compliance with streaming app requirements
+- **Dynamic Island**: Future support for Live Activities
+
+### Android Considerations
+- **Back Button Handling**: Proper navigation behavior
+- **Notification Permissions**: Stream notification management
+- **Background Playback**: Audio-only stream support
+- **Play Store Guidelines**: Compliance with content streaming policies
 
 ## Common Issues and Solutions
 
-### Metro Bundler Issues
+### Expo Development Issues
 ```bash
-# Clear Metro cache
-npx react-native start --reset-cache
+# Clear Expo cache
+npx expo start -c
 
-# Clear all caches
-npm run clean:all
+# Clear npm and Expo caches
+npm run clean && npx expo install --fix
+
+# Reset Metro bundler
+npx expo start --clear
 ```
 
-### Build Issues
+### Authentication Issues
 ```bash
-# iOS build issues
-cd ios && pod deintegrate && pod install
+# Check Clerk configuration
+echo $EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY
 
-# Android build issues
-cd android && ./gradlew clean
+# Verify secure store permissions
+npx expo install expo-secure-store
 ```
 
-### State Management
-- Always use Redux Toolkit for slice creation
-- Implement proper error handling in async thunks
-- Use Redux Persist for offline support
-- Normalize state shape for better performance
+### Dependency Issues
+```bash
+# Install with legacy peer deps (recommended)
+npm install --legacy-peer-deps
+
+# Clear node_modules and reinstall
+rm -rf node_modules package-lock.json
+npm install --legacy-peer-deps
+```
+
+## Development Status
+
+### MVP Features Completed ✅
+- [x] Expo project setup with TypeScript
+- [x] Clerk authentication with email/password
+- [x] Protected route navigation
+- [x] Tab navigation (Esport/Profile)
+- [x] Dark gaming theme UI
+- [x] Stream discovery with search
+- [x] Mock data system
+- [x] User profile management
+
+### Next Phase Development 🚧
+- [ ] Video player integration with expo-av
+- [ ] Individual stream detail pages
+- [ ] Real streaming API integration
+- [ ] Enhanced user settings
+- [ ] Comprehensive testing suite
+- [ ] Performance optimizations
+
+### Development Timeline
+- **Week 1-2**: Core MVP (COMPLETED)
+- **Week 3**: Video streaming features
+- **Week 4**: API integration and testing
+- **Month Goal**: Production-ready esports streaming app
 
 ## Git Workflow
 
-### Branch Naming
-- `feature/description` - New features
-- `bugfix/description` - Bug fixes
-- `hotfix/description` - Production hotfixes
-- `refactor/description` - Code refactoring
+### Current Branch: main
+- All MVP features merged to main branch
+- Ready for feature development branches
 
-### Commit Messages
-Follow conventional commits:
-- `feat:` - New feature
-- `fix:` - Bug fix
-- `docs:` - Documentation changes
-- `style:` - Code style changes
-- `refactor:` - Code refactoring
-- `test:` - Test additions or changes
-- `chore:` - Build process or auxiliary tool changes
-
-## Deployment Checklist
-
-### Pre-deployment
-- [ ] All tests passing
-- [ ] No TypeScript errors
-- [ ] No ESLint warnings
-- [ ] Bundle size within limits
-- [ ] Performance metrics meet targets
-- [ ] Security audit passed
-
-### iOS Deployment
-- [ ] Increment build number
-- [ ] Update version if needed
-- [ ] Archive and upload to App Store Connect
-- [ ] Submit for TestFlight review
-- [ ] Test on multiple devices
-
-### Android Deployment
-- [ ] Increment versionCode
-- [ ] Update versionName if needed
-- [ ] Generate signed AAB
-- [ ] Upload to Play Console
-- [ ] Submit for internal testing
-
-## Monitoring and Analytics
-
-- Use Sentry for crash reporting
-- Implement Firebase Analytics for user behavior
-- Use Flipper for development debugging
-- Monitor performance with React DevTools
-- Track bundle size with react-native-bundle-visualizer
+### Commit Style
+```
+feat: add user profile screen with sign out
+fix: resolve authentication token refresh
+docs: update CLAUDE.md with current implementation
+chore: install dependencies with legacy peer deps
+```
 
 ## Additional Resources
 
-- [React Native Documentation](https://reactnative.dev/docs/getting-started)
-- [TypeScript React Native Guide](https://reactnative.dev/docs/typescript)
-- [React Navigation Documentation](https://reactnavigation.org/docs/getting-started)
-- [Redux Toolkit Documentation](https://redux-toolkit.js.org/)
-- [React Native Testing Library](https://callstack.github.io/react-native-testing-library/)
+- [Expo Documentation](https://docs.expo.dev/)
+- [Expo Router Guide](https://expo.github.io/router/)
+- [Clerk Expo Integration](https://clerk.com/docs/quickstarts/expo)
+- [React Query Documentation](https://tanstack.com/query)
+- [Expo AV Documentation](https://docs.expo.dev/versions/latest/sdk/av/)

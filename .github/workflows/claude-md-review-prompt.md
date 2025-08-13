@@ -1,6 +1,6 @@
 # CLAUDE.md Review and Update Prompt
 
-You are tasked with reviewing and updating the CLAUDE.md file for a React Native esports center management application. This file is crucial for providing context to future Claude Code sessions.
+You are tasked with reviewing and updating the CLAUDE.md file for a React Native Expo Go esports livestream platform. This file is crucial for providing context to future Claude Code sessions.
 
 ## Your Task
 
@@ -22,12 +22,13 @@ Analyze the entire codebase and update the CLAUDE.md file to accurately reflect:
 - Note any patterns or conventions consistently followed
 - Look for configuration files (package.json, tsconfig.json, etc.)
 
-### 2. React Native Specific Items
-- Navigation implementation (React Navigation, Native Navigation, etc.)
-- State management solution (Redux, MobX, Context API, etc.)
-- Native module integrations
+### 2. Expo React Native Specific Items
+- Navigation implementation (Expo Router file-based routing)
+- Authentication solution (Clerk integration)
+- State management solution (React Query, Context API)
+- Video streaming implementation (expo-av)
 - Platform-specific code organization
-- Testing setup (Jest, Detox, React Native Testing Library)
+- Testing setup (Jest, planned Playwright for E2E)
 
 ### 3. Commands Verification
 - Check package.json for all available scripts
@@ -87,4 +88,4 @@ The updated CLAUDE.md should:
 - Document both common tasks and edge cases
 - Be immediately useful for a new Claude Code session
 
-Remember: The goal is to create a comprehensive, accurate, and helpful guide that enables future Claude Code sessions to understand and work with this React Native codebase effectively.
+Remember: The goal is to create a comprehensive, accurate, and helpful guide that enables future Claude Code sessions to understand and work with this React Native Expo Go esports livestream platform effectively.

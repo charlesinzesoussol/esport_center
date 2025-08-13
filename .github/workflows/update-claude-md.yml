@@ -82,7 +82,7 @@ jobs:
             Additional instructions:
             - This is an automated workflow running in GitHub Actions
             - You have full access to read all files in the repository
-            - This is a React Native esports center management application
+            - This is a React Native Expo Go esports livestream platform
             
             IMPORTANT: Follow these steps in order:
             1. FIRST, use the Read tool to read the current CLAUDE.md file at the root of the repository
