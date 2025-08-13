@@ -32,16 +32,7 @@ jobs:
         with:
           fetch-depth: 0  # Get full history for better context
       
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-        if: hashFiles('package-lock.json') != ''
-      
-      - name: Install dependencies
-        run: npm ci
-        continue-on-error: true  # Continue even if npm ci fails (in case of lockfile issues)
-        if: hashFiles('package-lock.json') != ''
+      # Skip Node.js setup - this is a documentation repository
       
       - name: Read prompt file
         id: read-prompt
