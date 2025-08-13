@@ -1,296 +1,287 @@
-# Context Engineering Template
+# React Native Expo Go - Esports Center
 
-A comprehensive template for getting started with Context Engineering - the discipline of engineering context for AI coding assistants so they have the information necessary to get the job done end to end.
+A comprehensive React Native mobile application built with Expo Go for esports center management. This app provides tournament management, player profiles, team coordination, and real-time match tracking capabilities.
 
-> **Context Engineering is 10x better than prompt engineering and 100x better than vibe coding.**
+> **Built with React Native + Expo Go for rapid development and hot reloading.**
 
 ## 🚀 Quick Start
 
 ```bash
-# 1. Clone this template
-git clone https://github.com/coleam00/Context-Engineering-Intro.git
-cd Context-Engineering-Intro
+# 1. Clone the repository
+git clone https://github.com/charlesinzesoussol/esport_center.git
+cd esport_center
 
-# 2. Set up your project rules (optional - template provided)
-# Edit CLAUDE.md to add your project-specific guidelines
+# 2. Install dependencies
+npm install
 
-# 3. Add examples (highly recommended)
-# Place relevant code examples in the examples/ folder
+# 3. Start the Expo development server
+npx expo start
 
-# 4. Create your initial feature request
-# Edit INITIAL.md with your feature requirements
-
-# 5. Generate a comprehensive PRP (Product Requirements Prompt)
-# In Claude Code, run:
-/generate-prp INITIAL.md
-
-# 6. Execute the PRP to implement your feature
-# In Claude Code, run:
-/execute-prp PRPs/your-feature-name.md
+# 4. Open the Expo Go app on your device and scan the QR code
+# Or press 'i' for iOS simulator, 'a' for Android emulator
 ```
 
 ## 📚 Table of Contents
 
-- [What is Context Engineering?](#what-is-context-engineering)
-- [Template Structure](#template-structure)
-- [Step-by-Step Guide](#step-by-step-guide)
-- [Writing Effective INITIAL.md Files](#writing-effective-initialmd-files)
-- [The PRP Workflow](#the-prp-workflow)
-- [Using Examples Effectively](#using-examples-effectively)
+- [What is this App?](#what-is-this-app)
+- [Project Structure](#project-structure)
+- [Development Setup](#development-setup)
+- [Available Scripts](#available-scripts)
+- [Building for Production](#building-for-production)
+- [Testing](#testing)
 - [Best Practices](#best-practices)
 
-## What is Context Engineering?
+## What is this App?
 
-Context Engineering represents a paradigm shift from traditional prompt engineering:
+The Esports Center app is a complete mobile solution for managing esports tournaments and player communities:
 
-### Prompt Engineering vs Context Engineering
+### Core Features
 
-**Prompt Engineering:**
-- Focuses on clever wording and specific phrasing
-- Limited to how you phrase a task
-- Like giving someone a sticky note
+**Tournament Management:**
+- Create and manage tournaments
+- Real-time bracket updates
+- Live match scoring and tracking
 
-**Context Engineering:**
-- A complete system for providing comprehensive context
-- Includes documentation, examples, rules, patterns, and validation
-- Like writing a full screenplay with all the details
+**Player Profiles:**
+- Player statistics and rankings
+- Achievement tracking
+- Match history
 
-### Why Context Engineering Matters
+**Team Coordination:**
+- Team creation and management
+- Communication tools
+- Strategy planning
 
-1. **Reduces AI Failures**: Most agent failures aren't model failures - they're context failures
-2. **Ensures Consistency**: AI follows your project patterns and conventions
-3. **Enables Complex Features**: AI can handle multi-step implementations with proper context
-4. **Self-Correcting**: Validation loops allow AI to fix its own mistakes
-
-## Template Structure
+## Project Structure
 
 ```
-context-engineering-intro/
-├── .claude/
-│   ├── commands/
-│   │   ├── generate-prp.md    # Generates comprehensive PRPs
-│   │   └── execute-prp.md     # Executes PRPs to implement features
-│   └── settings.local.json    # Claude Code permissions
-├── PRPs/
-│   ├── templates/
-│   │   └── prp_base.md       # Base template for PRPs
-│   └── EXAMPLE_multi_agent_prp.md  # Example of a complete PRP
-├── examples/                  # Your code examples (critical!)
-├── CLAUDE.md                 # Global rules for AI assistant
-├── INITIAL.md               # Template for feature requests
-├── INITIAL_EXAMPLE.md       # Example feature request
-└── README.md                # This file
+esport_center/
+├── app/                    # Expo Router app directory
+│   ├── (tabs)/            # Tab-based navigation screens
+│   ├── tournament/        # Tournament-related screens
+│   ├── player/           # Player profile screens
+│   └── _layout.tsx       # Root layout configuration
+├── components/           # Reusable UI components
+│   ├── ui/              # Basic UI components
+│   ├── forms/           # Form components
+│   └── tournament/      # Tournament-specific components
+├── hooks/               # Custom React hooks
+├── utils/               # Utility functions
+├── constants/           # App constants and configuration
+├── assets/              # Images, fonts, and other static assets
+└── types/               # TypeScript type definitions
 ```
 
-This template doesn't focus on RAG and tools with context engineering because I have a LOT more in store for that soon. ;)
+## Development Setup
 
-## Step-by-Step Guide
+### Prerequisites
 
-### 1. Set Up Global Rules (CLAUDE.md)
+- **Node.js** 18+ and npm
+- **Expo CLI**: `npm install -g @expo/cli`
+- **Expo Go app** on your mobile device
+- **iOS Simulator** (macOS) or **Android Studio** (for emulators)
 
-The `CLAUDE.md` file contains project-wide rules that the AI assistant will follow in every conversation. The template includes:
-
-- **Project awareness**: Reading planning docs, checking tasks
-- **Code structure**: File size limits, module organization
-- **Testing requirements**: Unit test patterns, coverage expectations
-- **Style conventions**: Language preferences, formatting rules
-- **Documentation standards**: Docstring formats, commenting practices
-
-**You can use the provided template as-is or customize it for your project.**
-
-### 2. Create Your Initial Feature Request
-
-Edit `INITIAL.md` to describe what you want to build:
-
-```markdown
-## FEATURE:
-[Describe what you want to build - be specific about functionality and requirements]
-
-## EXAMPLES:
-[List any example files in the examples/ folder and explain how they should be used]
-
-## DOCUMENTATION:
-[Include links to relevant documentation, APIs, or MCP server resources]
-
-## OTHER CONSIDERATIONS:
-[Mention any gotchas, specific requirements, or things AI assistants commonly miss]
-```
-
-**See `INITIAL_EXAMPLE.md` for a complete example.**
-
-### 3. Generate the PRP
-
-PRPs (Product Requirements Prompts) are comprehensive implementation blueprints that include:
-
-- Complete context and documentation
-- Implementation steps with validation
-- Error handling patterns
-- Test requirements
-
-They are similar to PRDs (Product Requirements Documents) but are crafted more specifically to instruct an AI coding assistant.
-
-Run in Claude Code:
-```bash
-/generate-prp INITIAL.md
-```
-
-**Note:** The slash commands are custom commands defined in `.claude/commands/`. You can view their implementation:
-- `.claude/commands/generate-prp.md` - See how it researches and creates PRPs
-- `.claude/commands/execute-prp.md` - See how it implements features from PRPs
-
-The `$ARGUMENTS` variable in these commands receives whatever you pass after the command name (e.g., `INITIAL.md` or `PRPs/your-feature.md`).
-
-This command will:
-1. Read your feature request
-2. Research the codebase for patterns
-3. Search for relevant documentation
-4. Create a comprehensive PRP in `PRPs/your-feature-name.md`
-
-### 4. Execute the PRP
-
-Once generated, execute the PRP to implement your feature:
+### Installation
 
 ```bash
-/execute-prp PRPs/your-feature-name.md
+# Install dependencies
+npm install
+
+# Start development server
+npx expo start
+
+# Development commands
+npx expo start --ios          # iOS simulator
+npx expo start --android      # Android emulator
+npx expo start --web          # Web browser
+npx expo start --tunnel       # Tunnel for external access
 ```
 
-The AI coding assistant will:
-1. Read all context from the PRP
-2. Create a detailed implementation plan
-3. Execute each step with validation
-4. Run tests and fix any issues
-5. Ensure all success criteria are met
+## Available Scripts
 
-## Writing Effective INITIAL.md Files
-
-### Key Sections Explained
-
-**FEATURE**: Be specific and comprehensive
-- ❌ "Build a web scraper"
-- ✅ "Build an async web scraper using BeautifulSoup that extracts product data from e-commerce sites, handles rate limiting, and stores results in PostgreSQL"
-
-**EXAMPLES**: Leverage the examples/ folder
-- Place relevant code patterns in `examples/`
-- Reference specific files and patterns to follow
-- Explain what aspects should be mimicked
-
-**DOCUMENTATION**: Include all relevant resources
-- API documentation URLs
-- Library guides
-- MCP server documentation
-- Database schemas
-
-**OTHER CONSIDERATIONS**: Capture important details
-- Authentication requirements
-- Rate limits or quotas
-- Common pitfalls
-- Performance requirements
-
-## The PRP Workflow
-
-### How /generate-prp Works
-
-The command follows this process:
-
-1. **Research Phase**
-   - Analyzes your codebase for patterns
-   - Searches for similar implementations
-   - Identifies conventions to follow
-
-2. **Documentation Gathering**
-   - Fetches relevant API docs
-   - Includes library documentation
-   - Adds gotchas and quirks
-
-3. **Blueprint Creation**
-   - Creates step-by-step implementation plan
-   - Includes validation gates
-   - Adds test requirements
-
-4. **Quality Check**
-   - Scores confidence level (1-10)
-   - Ensures all context is included
-
-### How /execute-prp Works
-
-1. **Load Context**: Reads the entire PRP
-2. **Plan**: Creates detailed task list using TodoWrite
-3. **Execute**: Implements each component
-4. **Validate**: Runs tests and linting
-5. **Iterate**: Fixes any issues found
-6. **Complete**: Ensures all requirements met
-
-See `PRPs/EXAMPLE_multi_agent_prp.md` for a complete example of what gets generated.
-
-## Using Examples Effectively
-
-The `examples/` folder is **critical** for success. AI coding assistants perform much better when they can see patterns to follow.
-
-### What to Include in Examples
-
-1. **Code Structure Patterns**
-   - How you organize modules
-   - Import conventions
-   - Class/function patterns
-
-2. **Testing Patterns**
-   - Test file structure
-   - Mocking approaches
-   - Assertion styles
-
-3. **Integration Patterns**
-   - API client implementations
-   - Database connections
-   - Authentication flows
-
-4. **CLI Patterns**
-   - Argument parsing
-   - Output formatting
-   - Error handling
-
-### Example Structure
-
+### Development
+```bash
+npm start              # Start Expo development server
+npm run ios           # Run on iOS simulator
+npm run android       # Run on Android emulator
+npm run web           # Run in web browser
 ```
-examples/
-├── README.md           # Explains what each example demonstrates
-├── cli.py             # CLI implementation pattern
-├── agent/             # Agent architecture patterns
-│   ├── agent.py      # Agent creation pattern
-│   ├── tools.py      # Tool implementation pattern
-│   └── providers.py  # Multi-provider pattern
-└── tests/            # Testing patterns
-    ├── test_agent.py # Unit test patterns
-    └── conftest.py   # Pytest configuration
+
+### Testing
+```bash
+npm test              # Run Jest tests
+npm run test:watch    # Run tests in watch mode
+npm run test:coverage # Generate coverage report
+npm run test:e2e      # Run end-to-end tests with Detox
 ```
+
+### Code Quality
+```bash
+npm run lint          # Run ESLint
+npm run lint:fix      # Fix ESLint issues
+npm run type-check    # TypeScript type checking
+npm run format        # Format code with Prettier
+```
+
+### Building
+```bash
+npm run build         # Create production build
+npm run build:ios     # Build for iOS
+npm run build:android # Build for Android
+npm run preview       # Preview production build
+```
+
+## Building for Production
+
+### Expo Application Services (EAS)
+
+```bash
+# Install EAS CLI
+npm install -g eas-cli
+
+# Configure EAS
+eas build:configure
+
+# Build for both platforms
+eas build --platform all
+
+# Build for specific platform
+eas build --platform ios
+eas build --platform android
+
+# Submit to app stores
+eas submit --platform ios
+eas submit --platform android
+```
+
+### Local Development Build
+
+```bash
+# Create development build
+npx expo run:ios
+npx expo run:android
+
+# Create production build locally
+npx expo export
+```
+
+## Testing
+
+### Unit Testing with Jest
+
+```typescript
+// components/__tests__/PlayerCard.test.tsx
+import React from 'react';
+import { render } from '@testing-library/react-native';
+import { PlayerCard } from '../PlayerCard';
+
+describe('PlayerCard', () => {
+  it('displays player information correctly', () => {
+    const player = { id: '1', name: 'ProGamer', rank: 'Diamond' };
+    const { getByText } = render(<PlayerCard player={player} />);
+    
+    expect(getByText('ProGamer')).toBeTruthy();
+    expect(getByText('Diamond')).toBeTruthy();
+  });
+});
+```
+
+### E2E Testing with Detox
+
+```typescript
+// e2e/tournament.test.ts
+describe('Tournament Flow', () => {
+  beforeAll(async () => {
+    await device.launchApp();
+  });
+
+  it('should create a new tournament', async () => {
+    await element(by.id('create-tournament-btn')).tap();
+    await element(by.id('tournament-name')).typeText('Spring Championship');
+    await element(by.id('submit-btn')).tap();
+    
+    await expect(element(by.text('Spring Championship'))).toBeVisible();
+  });
+});
+```
+
+## Technology Stack
+
+- **Framework**: React Native with Expo Go
+- **Navigation**: Expo Router (file-based routing)
+- **State Management**: Zustand / React Query
+- **UI Components**: Expo UI + Custom components
+- **Styling**: Nativewind (Tailwind for React Native)
+- **Database**: Firebase Firestore
+- **Authentication**: Firebase Auth
+- **Real-time**: Firebase Realtime Database
+- **Testing**: Jest + React Native Testing Library + Detox
+- **Build**: Expo Application Services (EAS)
 
 ## Best Practices
 
-### 1. Be Explicit in INITIAL.md
-- Don't assume the AI knows your preferences
-- Include specific requirements and constraints
-- Reference examples liberally
+### Component Development
+- Use TypeScript for all components
+- Implement proper error boundaries
+- Follow React Native performance patterns
+- Use memo() for expensive components
 
-### 2. Provide Comprehensive Examples
-- More examples = better implementations
-- Show both what to do AND what not to do
-- Include error handling patterns
+### State Management
+- Use React Query for server state
+- Zustand for client state
+- Implement proper loading and error states
+- Cache data appropriately
 
-### 3. Use Validation Gates
-- PRPs include test commands that must pass
-- AI will iterate until all validations succeed
-- This ensures working code on first try
+### Styling
+- Use Nativewind for consistent styling
+- Implement responsive design patterns
+- Support dark mode
+- Follow platform-specific design guidelines
 
-### 4. Leverage Documentation
-- Include official API docs
-- Add MCP server resources
-- Reference specific documentation sections
+### Performance
+- Optimize FlatList usage
+- Implement lazy loading
+- Use React.memo strategically
+- Monitor bundle size
 
-### 5. Customize CLAUDE.md
-- Add your conventions
-- Include project-specific rules
-- Define coding standards
+## Environment Configuration
+
+```bash
+# .env.example
+EXPO_PUBLIC_API_URL=https://api.esportscenter.com
+EXPO_PUBLIC_FIREBASE_API_KEY=your_firebase_api_key
+EXPO_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
+EXPO_PUBLIC_SENTRY_DSN=your_sentry_dsn
+```
+
+## Deployment
+
+### Development
+- Use Expo Go for rapid development
+- Hot reloading for instant feedback
+- Over-the-air updates for quick iterations
+
+### Production
+- EAS Build for app store deployment
+- OTA updates for non-native changes
+- Staged rollouts for safe deployments
 
 ## Resources
 
-- [Claude Code Documentation](https://docs.anthropic.com/en/docs/claude-code)
-- [Context Engineering Best Practices](https://www.philschmid.de/context-engineering)
+- [Expo Documentation](https://docs.expo.dev/)
+- [React Native Documentation](https://reactnative.dev/)
+- [Expo Router Documentation](https://expo.github.io/router/)
+- [Firebase Documentation](https://firebase.google.com/docs)
+- [React Query Documentation](https://tanstack.com/query/latest)
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/amazing-feature`
+3. Commit changes: `git commit -m 'Add amazing feature'`
+4. Push to branch: `git push origin feature/amazing-feature`
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
