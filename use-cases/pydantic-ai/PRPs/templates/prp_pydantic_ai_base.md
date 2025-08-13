@@ -1,19 +1,19 @@
 ---
-name: "PydanticAI Agent PRP Template"
-description: "Template for generating comprehensive PRPs for PydanticAI agent development projects"
+name: "React Native AI Agent PRP Template"
+description: "Template for generating comprehensive PRPs for React Native AI agent development projects"
 ---
 
 ## Purpose
 
-[Brief description of the PydanticAI agent to be built and its main purpose]
+[Brief description of the React Native AI agent to be built and its main purpose]
 
 ## Core Principles
 
-1. **PydanticAI Best Practices**: Deep integration with PydanticAI patterns for agent creation, tools, and structured outputs
+1. **React Native Best Practices**: Deep integration with React Native patterns for agent creation, tools, and structured outputs
 2. **Production Ready**: Include security, testing, and monitoring for production deployments
-3. **Type Safety First**: Leverage PydanticAI's type-safe design and Pydantic validation throughout
+3. **Type Safety First**: Leverage TypeScript's type-safe design and validation throughout
 4. **Context Engineering Integration**: Apply proven context engineering workflows to AI agent development
-5. **Comprehensive Testing**: Use TestModel and FunctionModel for thorough agent validation
+5. **Comprehensive Testing**: Use Jest and React Native Testing Library for thorough agent validation
 
 ## ⚠️ Implementation Guidelines: Don't Over-Engineer
 
@@ -52,10 +52,10 @@ If the answer is no, don't build it. Keep it simple, focused, and functional.
 ## What
 
 ### Agent Type Classification
-- [ ] **Chat Agent**: Conversational interface with memory and context
-- [ ] **Tool-Enabled Agent**: Agent with external tool integration capabilities
-- [ ] **Workflow Agent**: Multi-step task processing and orchestration
-- [ ] **Structured Output Agent**: Complex data validation and formatting
+- [ ] **Chat Agent**: Conversational interface with React Native UI components
+- [ ] **Tool-Enabled Agent**: Agent with native module integration capabilities
+- [ ] **Workflow Agent**: Multi-step task processing with React Navigation
+- [ ] **Structured Output Agent**: Complex data validation with TypeScript interfaces
 
 ### Model Provider Requirements
 - [ ] **OpenAI**: `openai:gpt-4o` or `openai:gpt-4o-mini`
@@ -64,136 +64,131 @@ If the answer is no, don't build it. Keep it simple, focused, and functional.
 - [ ] **Fallback Strategy**: Multiple provider support with automatic failover
 
 ### External Integrations
-- [ ] Database connections (specify type: PostgreSQL, MongoDB, etc.)
-- [ ] REST API integrations (list required services)
-- [ ] File system operations
-- [ ] Web scraping or search capabilities
-- [ ] Real-time data sources
+- [ ] Database connections (AsyncStorage, SQLite, Realm, Firebase)
+- [ ] REST API integrations (Axios, Fetch API)
+- [ ] Native file system operations (react-native-fs)
+- [ ] WebView integration for web content
+- [ ] Real-time data with WebSocket or Firebase Realtime Database
 
 ### Success Criteria
 - [ ] Agent successfully handles specified use cases
-- [ ] All tools work correctly with proper error handling
-- [ ] Structured outputs validate according to Pydantic models
-- [ ] Comprehensive test coverage with TestModel and FunctionModel
-- [ ] Security measures implemented (API keys, input validation, rate limiting)
-- [ ] Performance meets requirements (response time, throughput)
+- [ ] All native modules work correctly with proper error handling
+- [ ] Structured outputs validate according to TypeScript interfaces
+- [ ] Comprehensive test coverage with Jest and React Native Testing Library
+- [ ] Security measures implemented (API keys, secure storage, certificate pinning)
+- [ ] Performance meets requirements (60 FPS, minimal memory usage)
 
 ## All Needed Context
 
-### PydanticAI Documentation & Research
+### React Native AI Documentation & Research
 
 ```yaml
-# MCP servers
-- mcp: Archon
-  query: "PydanticAI agent creation model providers tools dependencies"
-  why: Core framework understanding and latest patterns
+# React Native Documentation
+- url: https://reactnative.dev/
+  why: Official React Native documentation with getting started guide
+  content: Component creation, native modules, platform-specific code
 
-# ESSENTIAL PYDANTIC AI DOCUMENTATION - Must be researched
-- url: https://ai.pydantic.dev/
-  why: Official PydanticAI documentation with getting started guide
-  content: Agent creation, model providers, dependency injection patterns
+- url: https://reactnative.dev/docs/typescript
+  why: TypeScript integration and type safety patterns
+  content: Type definitions, interfaces, generics, strict typing
 
-- url: https://ai.pydantic.dev/agents/
-  why: Comprehensive agent architecture and configuration patterns
-  content: System prompts, output types, execution methods, agent composition
+- url: https://reactnative.dev/docs/native-modules-intro
+  why: Native module integration patterns and bridge communication
+  content: iOS/Android native code, event emitters, callbacks, promises
 
-- url: https://ai.pydantic.dev/tools/
-  why: Tool integration patterns and function registration
-  content: @agent.tool decorators, RunContext usage, parameter validation
+- url: https://reactnative.dev/docs/testing-overview
+  why: Testing strategies specific to React Native apps
+  content: Jest, React Native Testing Library, Detox for E2E
 
-- url: https://ai.pydantic.dev/testing/
-  why: Testing strategies specific to PydanticAI agents
-  content: TestModel, FunctionModel, Agent.override(), pytest patterns
-
-- url: https://ai.pydantic.dev/models/
-  why: Model provider configuration and authentication
-  content: OpenAI, Anthropic, Gemini setup, API key management, fallback models
+- url: https://reactnative.dev/docs/performance
+  why: Performance optimization and profiling
+  content: FlatList optimization, memory management, bundle size
 
 # Prebuilt examples
 - path: examples/
-  why: Reference implementations for Pydantic AI agents
-  content: A bunch of already built simple Pydantic AI examples to reference including how to set up models and providers
+  why: Reference implementations for React Native AI integration
+  content: Sample React Native components with AI features, navigation patterns, state management
 
-- path: examples/cli.py
-  why: Shows real-world interaction with Pydantic AI agents
-  content: Conversational CLI with streaming, tool call visibility, and conversation handling - demonstrates how users actually interact with agents
+- path: examples/App.tsx
+  why: Shows real-world React Native app structure
+  content: Navigation setup, theme providers, global state management - demonstrates app architecture
 ```
 
-### Agent Architecture Research
+### React Native Architecture Research
 
 ```yaml
-# PydanticAI Architecture Patterns (follow main_agent_reference)
-agent_structure:
+# React Native Architecture Patterns
+app_structure:
   configuration:
-    - settings.py: Environment-based configuration with pydantic-settings
-    - providers.py: Model provider abstraction with get_llm_model()
-    - Environment variables for API keys and model selection
-    - Never hardcode model strings like "openai:gpt-4o"
+    - config/index.ts: Environment-based configuration with react-native-config
+    - services/api.ts: API client abstraction with axios interceptors
+    - Environment variables via react-native-config or react-native-dotenv
+    - Never hardcode API endpoints or keys
   
-  agent_definition:
-    - Default to string output (no result_type unless structured output needed)
-    - Use get_llm_model() from providers.py for model configuration
-    - System prompts as string constants or functions
-    - Dataclass dependencies for external services
+  component_definition:
+    - Functional components with TypeScript interfaces
+    - Custom hooks for business logic separation
+    - Context API or Redux for state management
+    - Styled components or StyleSheet for styling
   
-  tool_integration:
-    - @agent.tool for context-aware tools with RunContext[DepsType]
-    - Tool functions as pure functions that can be called independently
-    - Proper error handling and logging in tool implementations
-    - Dependency injection through RunContext.deps
+  native_integration:
+    - Native modules for platform-specific features
+    - Event emitters for native-to-JS communication
+    - Proper error handling with error boundaries
+    - Bridge optimization for performance
   
   testing_strategy:
-    - TestModel for rapid development validation
-    - FunctionModel for custom behavior testing  
-    - Agent.override() for test isolation
-    - Comprehensive tool testing with mocks
+    - Jest for unit testing
+    - React Native Testing Library for component testing
+    - Detox or Appium for E2E testing
+    - Mock native modules for test isolation
 ```
 
 ### Security and Production Considerations
 
 ```yaml
-# PydanticAI Security Patterns (research required)
+# React Native Security Patterns
 security_requirements:
   api_management:
-    environment_variables: ["OPENAI_API_KEY", "ANTHROPIC_API_KEY", "GEMINI_API_KEY"]
-    secure_storage: "Never commit API keys to version control"
-    rotation_strategy: "Plan for key rotation and management"
+    environment_variables: ["API_BASE_URL", "API_KEY", "OAUTH_CLIENT_ID"]
+    secure_storage: "Use react-native-keychain or react-native-sensitive-info"
+    certificate_pinning: "Implement SSL pinning for API calls"
   
   input_validation:
-    sanitization: "Validate all user inputs with Pydantic models"
-    prompt_injection: "Implement prompt injection prevention strategies"
-    rate_limiting: "Prevent abuse with proper throttling"
+    sanitization: "Validate all user inputs with TypeScript and runtime checks"
+    injection_prevention: "Sanitize inputs before rendering in WebView"
+    rate_limiting: "Implement client-side throttling"
   
-  output_security:
-    data_filtering: "Ensure no sensitive data in agent responses"
-    content_validation: "Validate output structure and content"
-    logging_safety: "Safe logging without exposing secrets"
+  app_security:
+    code_obfuscation: "Use Hermes and ProGuard/R8 for production builds"
+    jailbreak_detection: "Implement root/jailbreak detection"
+    secure_communication: "HTTPS only, no cleartext traffic"
 ```
 
-### Common PydanticAI Gotchas (research and document)
+### Common React Native Gotchas (research and document)
 
 ```yaml
-# Agent-specific gotchas to research and address
+# React Native-specific gotchas to research and address
 implementation_gotchas:
-  async_patterns:
-    issue: "Mixing sync and async agent calls inconsistently"
-    research: "PydanticAI async/await best practices"
-    solution: "[To be documented based on research]"
+  platform_differences:
+    issue: "iOS and Android behavior inconsistencies"
+    research: "Platform-specific code patterns and conditional rendering"
+    solution: "Use Platform.OS and Platform.select for platform-specific logic"
   
-  model_limits:
-    issue: "Different models have different capabilities and token limits"
-    research: "Model provider comparison and capabilities"
-    solution: "[To be documented based on research]"
+  performance_issues:
+    issue: "JS thread blocking and frame drops"
+    research: "Performance optimization with InteractionManager and requestAnimationFrame"
+    solution: "Offload heavy computations to native modules or web workers"
   
-  dependency_complexity:
-    issue: "Complex dependency graphs can be hard to debug"
-    research: "Dependency injection best practices in PydanticAI"
-    solution: "[To be documented based on research]"
+  memory_leaks:
+    issue: "Event listeners and timers not cleaned up"
+    research: "useEffect cleanup patterns and memory management"
+    solution: "Always return cleanup functions in useEffect hooks"
   
-  tool_error_handling:
-    issue: "Tool failures can crash entire agent runs"
-    research: "Error handling and retry patterns for tools"
-    solution: "[To be documented based on research]"
+  navigation_state:
+    issue: "State loss during navigation or app backgrounding"
+    research: "State persistence with Redux Persist or AsyncStorage"
+    solution: "Implement proper state hydration and persistence"
 ```
 
 ## Implementation Blueprint
@@ -202,38 +197,39 @@ implementation_gotchas:
 
 **RESEARCH REQUIRED - Complete before implementation:**
 
-✅ **PydanticAI Framework Deep Dive:**
-- [ ] Agent creation patterns and best practices
-- [ ] Model provider configuration and fallback strategies
-- [ ] Tool integration patterns (@agent.tool vs @agent.tool_plain)
-- [ ] Dependency injection system and type safety
-- [ ] Testing strategies with TestModel and FunctionModel
+✅ **React Native Framework Deep Dive:**
+- [ ] Component patterns and hooks best practices
+- [ ] Native module creation and bridge communication
+- [ ] Navigation patterns (React Navigation vs Native Navigation)
+- [ ] State management (Context API, Redux, MobX, Zustand)
+- [ ] Testing strategies with Jest and React Native Testing Library
 
-✅ **Agent Architecture Investigation:**
-- [ ] Project structure conventions (agent.py, tools.py, models.py, dependencies.py)
-- [ ] System prompt design (static vs dynamic)
-- [ ] Structured output validation with Pydantic models
-- [ ] Async/sync patterns and streaming support
-- [ ] Error handling and retry mechanisms
+✅ **App Architecture Investigation:**
+- [ ] Project structure conventions (screens/, components/, services/, utils/)
+- [ ] Component composition and prop drilling solutions
+- [ ] TypeScript integration and type safety patterns
+- [ ] Platform-specific code organization
+- [ ] Error boundaries and crash reporting
 
 ✅ **Security and Production Patterns:**
-- [ ] API key management and secure configuration
-- [ ] Input validation and prompt injection prevention
-- [ ] Rate limiting and monitoring strategies
-- [ ] Logging and observability patterns
-- [ ] Deployment and scaling considerations
+- [ ] Secure storage for sensitive data
+- [ ] API security with certificate pinning
+- [ ] Code obfuscation and anti-tampering
+- [ ] Performance monitoring with Flipper or React DevTools
+- [ ] OTA updates with CodePush
 
-### Agent Implementation Plan
+### React Native Implementation Plan
 
 ```yaml
-Implementation Task 1 - Agent Architecture Setup (Follow main_agent_reference):
-  CREATE agent project structure:
-    - settings.py: Environment-based configuration with pydantic-settings
-    - providers.py: Model provider abstraction with get_llm_model()
-    - agent.py: Main agent definition (default string output)
-    - tools.py: Tool functions with proper decorators
-    - dependencies.py: External service integrations (dataclasses)
-    - tests/: Comprehensive test suite
+Implementation Task 1 - App Architecture Setup:
+  CREATE React Native project structure:
+    - src/config/: Environment configuration with react-native-config
+    - src/services/: API clients and external service integrations
+    - src/screens/: Screen components with navigation
+    - src/components/: Reusable UI components
+    - src/hooks/: Custom React hooks for business logic
+    - src/utils/: Helper functions and utilities
+    - __tests__/: Comprehensive test suite
 
 Implementation Task 2 - Core Agent Development:
   IMPLEMENT agent.py following main_agent_reference patterns:

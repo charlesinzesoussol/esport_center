@@ -1,39 +1,39 @@
 ---
-name: "PydanticAI Template Generator PRP"
-description: "Generate comprehensive context engineering template for PydanticAI agent development with tools, memory, and structured outputs"
+name: "React Native AI Template Generator PRP"
+description: "Generate comprehensive context engineering template for React Native AI agent development with native modules, state management, and TypeScript"
 ---
 
 ## Purpose
 
-Generate a complete context engineering template package for **PydanticAI** that enables developers to rapidly build intelligent AI agents with tool integration, conversation handling, and structured data validation using the PydanticAI framework.
+Generate a complete context engineering template package for **React Native AI** that enables developers to rapidly build intelligent mobile AI applications with native integration, real-time interactions, and type-safe data validation using React Native and TypeScript.
 
 ## Core Principles
 
-1. **PydanticAI Specialization**: Deep integration with PydanticAI patterns for agent creation, tools, and structured outputs
+1. **React Native Specialization**: Deep integration with React Native patterns for mobile AI apps, native modules, and cross-platform code
 2. **Complete Package Generation**: Create entire template ecosystem with working examples and validation
-3. **Type Safety First**: Leverage PydanticAI's type-safe design and Pydantic validation throughout
-4. **Production Ready**: Include security, testing, and best practices for production deployments
-5. **Context Engineering Integration**: Apply proven context engineering workflows to AI agent development
+3. **Type Safety First**: Leverage TypeScript's type-safe design and runtime validation throughout
+4. **Production Ready**: Include security, testing, and best practices for App Store/Play Store deployments
+5. **Context Engineering Integration**: Apply proven context engineering workflows to mobile AI development
 
 ---
 
 ## Goal
 
-Generate a complete context engineering template package for **PydanticAI** that includes:
+Generate a complete context engineering template package for **React Native AI** that includes:
 
-- PydanticAI-specific CLAUDE.md implementation guide with agent patterns
-- Specialized PRP generation and execution commands for AI agents
-- Domain-specific base PRP template with agent architecture patterns
-- Comprehensive working examples (chat agents, tool integration, multi-step workflows)
-- PydanticAI-specific validation loops and testing patterns
+- React Native-specific CLAUDE.md implementation guide with mobile AI patterns
+- Specialized PRP generation and execution commands for mobile AI apps
+- Domain-specific base PRP template with React Native architecture patterns
+- Comprehensive working examples (chat UI, native AI integration, real-time interactions)
+- React Native-specific validation loops and testing patterns with Jest and Detox
 
 ## Why
 
-- **AI Development Acceleration**: Enable rapid development of production-grade PydanticAI agents
-- **Pattern Consistency**: Maintain established AI agent architecture patterns and best practices
-- **Quality Assurance**: Ensure comprehensive testing for agent behavior, tools, and outputs
-- **Knowledge Capture**: Document PydanticAI-specific patterns, gotchas, and integration strategies
-- **Scalable AI Framework**: Create reusable templates for various AI agent use cases
+- **Mobile AI Development Acceleration**: Enable rapid development of production-grade React Native AI apps
+- **Pattern Consistency**: Maintain established React Native architecture patterns and best practices
+- **Quality Assurance**: Ensure comprehensive testing for UI components, native modules, and AI interactions
+- **Knowledge Capture**: Document React Native-specific patterns, platform differences, and integration strategies
+- **Scalable Mobile Framework**: Create reusable templates for various mobile AI use cases
 
 ## What
 
