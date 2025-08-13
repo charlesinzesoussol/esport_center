@@ -19,6 +19,7 @@ permissions:
   pull-requests: write
   issues: write
   id-token: write
+  actions: read
 
 jobs:
   update-claude-md:
@@ -131,14 +132,15 @@ jobs:
         if: steps.check-changes.outputs.has_changes == 'true' && !inputs.skip_pr
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # Push the branch
           git push origin ${{ steps.branch.outputs.branch_name }}
           
-          # Create PR using GitHub CLI
+          # Create PR using GitHub CLI with explicit token
           gh pr create \
             --title "chore: Update CLAUDE.md documentation (automated)" \
-            --body "## Automated CLAUDE.md Update
+            --body "## 🤖 Automated CLAUDE.md Update
 
           This PR contains an automated update to the CLAUDE.md file based on a comprehensive analysis of the current codebase.
           
@@ -165,7 +167,7 @@ jobs:
           *Workflow run: [${{ github.run_id }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})*" \
             --base main \
             --head ${{ steps.branch.outputs.branch_name }} \
-            --label "documentation"
+            --label "documentation" || echo "::notice::PR creation failed, but branch was pushed. Create PR manually at: https://github.com/${{ github.repository }}/pull/new/${{ steps.branch.outputs.branch_name }}"
       
       - name: Direct commit (if skip_pr is true)
         if: steps.check-changes.outputs.has_changes == 'true' && inputs.skip_pr
