@@ -66,12 +66,10 @@ jobs:
         id: claude-update
         with:
           # Use OAuth token for Pro subscription
-          # You need to generate this token locally with: claude setup-token
-          # Then add it as a repository secret named CLAUDE_CODE_OAUTH_TOKEN
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           
-          # Alternatively, you can use an API key:
-          # anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          # Provide GitHub token for repository access
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           
           # Set mode to 'agent' for automation workflows
           mode: agent
