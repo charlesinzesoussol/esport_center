@@ -1,11 +1,12 @@
 {
   "expo": {
-    "name": "EsportsStream",
-    "slug": "esports-stream",
+    "name": "Esports Center",
+    "slug": "esports-center",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "dark",
+    "sdkVersion": "53.0.0",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -32,7 +33,7 @@
     "plugins": [
       "expo-router"
     ],
-    "scheme": "esports-stream",
+    "scheme": "esports-center",
     "experiments": {
       "typedRoutes": true
     }

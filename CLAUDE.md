@@ -8,7 +8,7 @@ This is a React Native Expo Go mobile application for esports live stream discov
 
 ## Technology Stack
 
-- **Framework**: React Native 0.73+ with Expo 50 and TypeScript
+- **Framework**: React Native 0.79+ with Expo 53 and TypeScript
 - **Navigation**: Expo Router (file-based routing)
 - **Authentication**: Clerk with expo-secure-store for token management
 - **State Management**: React Query (@tanstack/react-query)

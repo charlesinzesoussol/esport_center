@@ -34,22 +34,16 @@ const queryClient = new QueryClient({
 });
 
 export default function RootLayout() {
-  const [publishableKey, setPublishableKey] = useState<string>('');
-
-  useEffect(() => {
-    // Get Clerk publishable key from environment
-    const key = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
-    if (!key) {
-      console.warn('Missing EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY in environment variables');
-      // For development, we'll proceed without authentication
-      setPublishableKey('mock-key');
-    } else {
-      setPublishableKey(key);
-    }
-  }, []);
-
-  if (!publishableKey) {
-    return null; // Loading state
+  const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
+  
+  // If no Clerk key is provided, run without authentication
+  if (!publishableKey || publishableKey === 'pk_test_example_key') {
+    return (
+      <QueryClientProvider client={queryClient}>
+        <StatusBar style="light" backgroundColor="#1a1a1a" />
+        <Slot />
+      </QueryClientProvider>
+    );
   }
 
   return (
