@@ -8,15 +8,15 @@ This is a React Native Expo Go mobile application for esports live stream discov
 
 ## Technology Stack
 
-- **Framework**: React Native 0.79+ with Expo 53 and TypeScript
-- **Navigation**: Expo Router (file-based routing)
-- **Authentication**: Clerk with expo-secure-store for token management
-- **State Management**: React Query (@tanstack/react-query)
+- **Framework**: React Native 0.79.5 with Expo 53.0.20 and TypeScript 5.8.3
+- **Navigation**: Expo Router 5.1.4 (file-based routing with typed routes)
+- **Authentication**: Clerk 1.0.0 with expo-secure-store 14.2.3 for token management
+- **State Management**: React Query 5.0.0 (@tanstack/react-query)
 - **UI Components**: React Native core components with custom styled components
-- **Video Streaming**: expo-av for video playback
-- **Testing**: Jest for unit tests, planned Playwright for E2E
-- **CI/CD**: GitHub Actions with automated testing and deployment
-- **Platform Support**: iOS 13+ and Android 8+ (API 26+)
+- **Video Streaming**: expo-av 15.1.7 for video playback
+- **Testing**: Jest 29.2.1 with jest-expo 53.0.9 for unit tests
+- **CI/CD**: GitHub Actions with automated CLAUDE.md updates
+- **Platform Support**: iOS and Android with universal SafeAreaView handling
 
 ## Project Structure
 
@@ -27,17 +27,20 @@ esport_center/
 │   │   ├── login.tsx     # Login screen with Clerk integration
 │   │   └── signup.tsx    # Sign up screen with email verification
 │   ├── (tabs)/           # Tab navigation group
-│   │   ├── _layout.tsx   # Tab layout with auth protection and redirect
+│   │   ├── _layout.tsx   # Tab layout (auth currently disabled)
 │   │   ├── esport.tsx    # Main stream discovery screen with search
 │   │   └── profile.tsx   # User profile screen with settings
-│   └── _layout.tsx       # Root layout with Clerk and React Query providers
+│   ├── _layout.tsx       # Root layout with Clerk and React Query providers
+│   └── index.tsx         # Entry point for the app
 ├── assets/               # Images, fonts, and other static assets
 │   ├── adaptive-icon.png # Android adaptive icon
 │   ├── favicon.png       # Web favicon
 │   ├── icon.png         # iOS app icon
 │   └── splash.png       # Splash screen image
+├── .github/              # GitHub Actions and workflow files
+│   └── workflows/        # CI/CD automation
 ├── babel.config.js       # Babel configuration with expo-router and module resolver
-├── metro.config.js       # Metro bundler configuration
+├── metro.config.js       # Metro bundler configuration (default Expo config)
 ├── app.json             # Expo app configuration
 ├── tsconfig.json        # TypeScript configuration with path mapping
 ├── package.json         # Dependencies and scripts
@@ -291,18 +294,21 @@ const useStreams = () => {
 ## Current Features Implemented
 
 ### Authentication System
-- **Clerk Integration**: Complete email/password authentication with @clerk/clerk-expo ^1.0.0
-- **Secure Token Storage**: expo-secure-store ~12.8.1 for iOS Keychain/Android Keystore
-- **Protected Routes**: Tab layout redirects to login if not authenticated using useAuth hook
+- **Clerk Integration**: Complete email/password authentication with @clerk/clerk-expo 1.0.0
+- **Secure Token Storage**: expo-secure-store 14.2.3 for iOS Keychain/Android Keystore
+- **Fallback Mode**: App runs without authentication if no Clerk key provided
+- **Protected Routes**: Authentication checks currently disabled in tab layout (commented out)
 - **Error Handling**: Comprehensive error handling with user-friendly alerts
 - **Session Management**: Automatic session handling with setActive on successful login
+- **Email Verification**: Two-step signup process with email verification codes
 
 ### Navigation Structure
-- **Expo Router**: File-based routing ~3.4.0 with typed routes enabled
+- **Expo Router**: File-based routing 5.1.4 with typed routes enabled
 - **Route Groups**: (auth) and (tabs) groups for organized navigation
 - **Tab Navigation**: Two main tabs (Esport and Profile) with Ionicons
-- **Auth Guards**: Authentication checks in tab layout with loading states
-- **Deep Linking**: Configured with custom scheme 'esports-stream'
+- **Auth Guards**: Authentication checks currently disabled (commented out in tab layout)
+- **Deep Linking**: Configured with custom scheme 'esports-center'
+- **Entry Point**: index.tsx at app root for initial routing
 
 ### Stream Discovery
 - **Mock Data System**: Complete mock streams with viewerCount, thumbnails, live status
@@ -359,7 +365,7 @@ npm run test:watch
 npm run test:coverage
 ```
 
-**Note**: No test files currently exist in the project. Testing infrastructure is configured but tests need to be created.
+**Note**: No test files currently exist in the main app directory. Testing infrastructure is configured but tests need to be created. Some test files exist in use-cases/mcp-server subdirectory but are not part of the main app.
 
 ## Performance Optimization
 
@@ -384,10 +390,11 @@ npm run test:coverage
 ## Security Implementation
 
 ### Current Security Measures
-- **Clerk Authentication**: Industry-standard OAuth implementation
+- **Clerk Authentication**: Industry-standard OAuth implementation with fallback mode
 - **Secure Token Storage**: expo-secure-store for iOS Keychain/Android Keystore
-- **Environment Variables**: Proper handling of sensitive configuration
-- **Protected Routes**: Authentication required for main app features
+- **Environment Variables**: Proper handling of EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY
+- **Graceful Degradation**: App runs in demo mode if authentication is not configured
+- **Secure Input Handling**: Password fields with proper secureTextEntry configuration
 
 ### Production Security Checklist
 - **Expo EAS Build**: Secure cloud builds with proper signing
@@ -490,7 +497,7 @@ npm install --legacy-peer-deps
 
 ## Git Workflow
 
-### Current Branch: update-claude-md-20250813-223843
+### Current Branch: update-claude-md-20250814-223202
 - Working branch for documentation updates
 - Main branch contains completed MVP features
 - Ready for feature development branches
@@ -518,13 +525,18 @@ chore: install dependencies with legacy peer deps
   - `module-resolver` for path aliases matching tsconfig
 
 ### App Configuration (app.json)
-- **Name**: EsportsStream
-- **Slug**: esports-stream
+- **Name**: Esports Center
+- **Slug**: esports-center
+- **Version**: 1.0.0
+- **SDK Version**: 53.0.0
 - **Orientation**: Portrait only
 - **Theme**: Dark mode (`userInterfaceStyle: "dark"`)
 - **Splash**: Dark background (#1a1a1a)
+- **Bundle IDs**: com.esportsstream.app (iOS/Android)
 - **Plugins**: expo-router
+- **Scheme**: esports-center
 - **Experiments**: Typed routes enabled
+- **Web**: Metro bundler with favicon support
 
 ## Additional Resources
 
