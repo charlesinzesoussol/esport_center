@@ -1,97 +1,113 @@
-# EsportsStream
+# Automatic App Landing Page
+**Create and deploy an iOS app landing page on GitHub Pages in only five minutes.**
 
-**The future of esports streaming discovery is coming soon.**
+Designed for GitHub Pages for super easy set up. 
 
-Never miss your favorite gaming moments again. We're building the ultimate mobile platform to discover, watch, and connect with live esports content across all major titles.
+🔧 Fork this repo
 
-## 🎯 What We're Building
+🗝 Enter iOS App ID in `_config.yml`
 
-**Smart Stream Discovery**
-- Find live streams instantly across League of Legends, Valorant, CS2, Dota 2, and more
-- Personalized recommendations based on your gaming interests
-- Real-time notifications when your favorite streamers go live
+📲 Upload video preview or screenshot
 
-**Mobile-First Experience**
-- Dark gaming-optimized interface designed for long viewing sessions
-- Seamless video playback with chat integration
-- Offline mode to save streams for later viewing
+🎨 Customise site in `_config.yml` (no HTML/CSS)
 
-**Community Features**
-- Follow your favorite streamers and tournaments
-- Custom watch lists and stream collections
-- Share epic moments with friends
+📝 Write Privacy Policy as markdown in `privacypolicy.md`
 
-## 🚀 Current Status
+🕒 Keep a changelog in `CHANGELOG.md`
 
-This repository contains our **coming soon landing page** to gauge interest and collect early access signups.
+✅ Site becomes live at GitHub Pages repository URL, e.g. `https://your-username.github.io/your-repo-name/`.
 
-- Built with **Astro** + **Tailwind CSS** for optimal performance
-- Single-page, no-scroll design focused on email collection
-- Gaming-themed dark aesthetic with modern animations
-- Mobile-responsive and optimized for all devices
+<img src="https://emilbaehr.com/files/jayson1.png" width="440"> <img src="https://emilbaehr.com/files/slor1.png" width="440">
 
-## 📱 Landing Page
 
-Visit the live demo at **http://localhost:4324/** (when running locally)
 
-### Quick Start
-```bash
-git clone https://github.com/charlesinzesoussol/esport_center.git
-cd esport_center
-npm install
-npm start
-```
 
-## 🎮 The Vision
+## Quick Start
 
-**Problem**: Gamers waste time jumping between platforms to find quality esports content
+### Step 1: Fork this repo.
+After forking the repo, your site will be live immediately on your personal Github Pages account, e.g. `https://yourusername.github.io/your-repo-name/`.
 
-**Solution**: One app that intelligently surfaces the best live gaming content based on your preferences
+*Make sure GitHub Pages is enabled for your repo. It might take some time for the site to propagate entirely.*
 
-**Market**: 3+ billion gamers worldwide, with esports viewership growing 10% year-over-year
 
-## 💡 Why This Will Win
 
-- **Mobile-first** approach (most gaming content consumed on mobile)
-- **AI-powered** discovery reduces decision fatigue
-- **Cross-platform** support for all major streaming services
-- **Community-driven** features that existing platforms lack
+### Step 2: Enter iOS App ID in `_config.yml`
+Enter your iOS app ID in the `ios_app_id` field and commit your changes. Your site will automatically rebuild with your app icon, name, price and link to App Store.
 
-## 📊 Early Validation
+You can go on with customising almost anything in the `_config.yml` file. 
 
-- Landing page collecting early access emails
-- Target: 1,000+ signups before MVP development
-- Direct feedback from gaming communities
+Things you can customise in `_config.yml`:
+- App Name
+- App Icon
+- App Description
+- App Price
+- App Store Link
+- Play Store Link
+- Press Kit Download Link
+- Cover Image
+- Cover Overlay Color
+- Background Color
+- Text Colors
+- iPhone Device Color
+- Your Name / Company Name
+- Link to Website
+- Social Links and Contact Info
+- Feature List (Title, text, icon)
 
-## 🛠 Tech Stack
 
-**Landing Page (Current)**
-- Astro 4.x for static site generation
-- Tailwind CSS for gaming-themed styling
-- TypeScript for type safety
-- Local storage for email collection
 
-**Mobile App (Planned)**
-- React Native with Expo for cross-platform development
-- Real-time streaming APIs integration
-- Push notifications for live alerts
-- Offline-first architecture
+### Step 3: Add screenshot or video
 
-## 🎯 Next Steps
+#### Adding a screenshot
+Upload a `.png` or `.jpg` of your app to the folder `assets/screenshot/`. The name does not matter. Be sure to delete the placeholder `yourscreenshot.png`.
 
-1. **Validate Interest** - Collect 1,000+ early access emails
-2. **MVP Development** - Build core streaming discovery features
-3. **Beta Testing** - Launch with select gaming communities
-4. **Scale & Monetize** - Premium features and partnerships
+#### Adding video
+Upload your video to the folder `assets/videos/`. To have support for most browsers, you need to upload two files – one for Safari and one for Chrome/Firefox.
 
-## 📈 Business Model
+Video formats supported by Chrome and Firefox:
+- `.webm`
+- `.ogg`
 
-- **Freemium**: Basic discovery free, premium features paid
-- **Partnerships**: Revenue sharing with streaming platforms
-- **Creator Tools**: Monetization features for streamers
+Video formats supported by Safari:
+- `.mp4`
+- `.mov`
 
----
+#### Resolutions
+The videos and screenshots must have one of the following resolutions:
+- 828x1792
+- 1125x2436
+- 1242x2688
 
-**Ready to revolutionize esports streaming?** 
 
-Get early access at our landing page and be part of the future of gaming content discovery.
+
+### Step 4: Edit (or remove) Privacy Policy and Changelog
+Your site automatically includes pages for a Privacy Policy and a Changelog. Change the content of these pages by editing the `privacypolicy.md` and `CHANGELOG.md` files in the `_pages` directory.
+
+In each of the markdown files, you can set the `include_in_header:` value to either `true` or `false`. This determines if the page is included in the top navigation.
+By default, only the Changelog is included in the top navigation. The title of the navigation item can also be edited, by editing the `title:` in each markdown file.
+
+If you need to, you can create additional markdown based pages just by creating an `.md` file like the `privacypolicy.md` and `CHANGELOG.md` files in the `_pages` directory.
+
+**Please note:** The Privacy Policy and Changelog provided are written using dummy text, so please adapt each of them for your own app.
+You can also choose not to include these pages, by simple deleting the `privacypolicy.md` and `CHANGELOG.md` files.
+
+
+
+
+## Feedback
+If you have feedback regarding bugs or improvements, open an issue, @ me on Twitter or write me an email. You can find my contact info on my website.
+
+I'd love to see the sites you create using this little tool.
+
+## Credits
+- [Jekyll](https://github.com/jekyll/jekyll)
+- [FontAwesome](https://fontawesome.github.io/Font-Awesome/)
+
+## Donations
+[Donations are welcome](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=S8ZZT3JXJPN92&currency_code=USD&source=url)
+
+## Author
+[Emil Baehr](https://emilbaehr.com/)
+
+## License
+[MIT License](LICENSE)
