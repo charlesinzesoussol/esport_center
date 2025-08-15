@@ -1,28 +1,24 @@
 {
-  "extends": "expo/tsconfig.base",
+  "extends": "astro/tsconfigs/base",
   "compilerOptions": {
-    "strict": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./app/*"],
-      "@/components/*": ["./components/*"],
-      "@/hooks/*": ["./hooks/*"],
-      "@/types/*": ["./types/*"],
-      "@/utils/*": ["./utils/*"],
-      "@/constants/*": ["./constants/*"],
-      "@/services/*": ["./services/*"]
+      "@/*": ["./src/*"],
+      "@/components/*": ["./src/components/*"],
+      "@/layouts/*": ["./src/layouts/*"],
+      "@/pages/*": ["./src/pages/*"]
     }
   },
   "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    ".expo/types/**/*.ts",
-    "expo-env.d.ts"
+    "src/**/*",
+    "astro.config.mjs",
+    "tailwind.config.mjs"
   ],
   "exclude": [
-    "**/*.test.ts",
-    "**/*.test.tsx",
-    "__tests__/**/*",
-    "use-cases/**/*"
+    "use-cases/**/*",
+    "examples/**/*",
+    "PRPs/**/*",
+    "node_modules/**/*",
+    "dist/**/*"
   ]
 }
