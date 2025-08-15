@@ -5,5 +5,6 @@ import react from '@astrojs/react';
 export default defineConfig({
   integrations: [tailwind(), react()],
   output: 'static',
-  site: 'https://esportsstream.app',
+  site: 'https://charlesinzesoussol.github.io',
+  base: 'esport_center',
 });
