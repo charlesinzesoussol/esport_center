@@ -534,3 +534,6 @@ chore: install dependencies with legacy peer deps
 - [React Query Documentation](https://tanstack.com/query)
 - [Expo AV Documentation](https://docs.expo.dev/versions/latest/sdk/av/)
 - [React Native Safe Area Context](https://github.com/th3rdwave/react-native-safe-area-context)
+
+
+**ALWAYS USE SUB AGENTS WHEN YOU HAVE TO MAKE A SPECIALISED TASK IN THE AGENT DOMAIN !**

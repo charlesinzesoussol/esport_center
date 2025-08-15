@@ -105,7 +105,8 @@ export default function EsportScreen() {
   };
 
   const handleStreamPress = (streamId: string) => {
-    router.push(`/stream/${streamId}`);
+    // TODO: Navigate to individual stream page when implemented
+    console.log('Stream pressed:', streamId);
   };
 
   const filteredStreams = streams.filter(stream =>

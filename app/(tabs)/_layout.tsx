@@ -1,40 +1,59 @@
-import { Tabs } from 'expo-router';
+import { Tabs, Redirect, useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-// import { useAuth } from '@clerk/clerk-expo';
-// import { Redirect } from 'expo-router';
+import { useAuth } from '@clerk/clerk-expo';
+import { View, ActivityIndicator, StyleSheet } from 'react-native';
+import { useEffect } from 'react';
 
 export default function TabLayout() {
-  // Temporarily disable auth check
-  // const { isSignedIn, isLoaded } = useAuth();
+  const { isSignedIn, isLoaded } = useAuth();
+  const router = useRouter();
 
-  // Show loading state while auth is loading
-  // if (!isLoaded) {
-  //   return null;
-  // }
+  useEffect(() => {
+    // Only redirect if auth is loaded and user is not signed in
+    if (isLoaded && !isSignedIn) {
+      console.log('User not authenticated in tabs, redirecting to sign-in');
+      router.replace('/(auth)/sign-in');
+    }
+  }, [isSignedIn, isLoaded, router]);
 
-  // Redirect to auth if not signed in
-  // if (!isSignedIn) {
-  //   return <Redirect href="/(auth)/login" />;
-  // }
+  // Show loading spinner while auth state is loading
+  if (!isLoaded) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator testID="loading-indicator" size="large" color="#6366f1" />
+      </View>
+    );
+  }
+
+  // Don't render tabs if not authenticated - the useEffect will handle redirect
+  if (!isSignedIn) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator testID="loading-indicator" size="large" color="#6366f1" />
+      </View>
+    );
+  }
 
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: '#00ff88', // Gaming green
-        tabBarInactiveTintColor: '#666666',
+        tabBarActiveTintColor: '#6366f1',
+        tabBarInactiveTintColor: '#94a3b8',
         tabBarStyle: { 
-          backgroundColor: '#1a1a1a',
-          borderTopColor: '#333333',
+          backgroundColor: '#ffffff',
+          borderTopColor: '#e2e8f0',
           borderTopWidth: 1,
         },
         headerStyle: { 
-          backgroundColor: '#1a1a1a',
+          backgroundColor: '#ffffff',
           shadowColor: 'transparent',
           elevation: 0,
+          borderBottomColor: '#e2e8f0',
+          borderBottomWidth: 1,
         },
-        headerTintColor: '#ffffff',
+        headerTintColor: '#1e293b',
         headerTitleStyle: {
-          fontWeight: 'bold',
+          fontWeight: '700',
           fontSize: 18,
         },
       }}
@@ -62,3 +81,12 @@ export default function TabLayout() {
     </Tabs>
   );
 }
+
+const styles = StyleSheet.create({
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#ffffff',
+  },
+});
