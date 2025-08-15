@@ -10,7 +10,7 @@ const { title } = Astro.props;
 <html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="Discover live esports streams from top gamers and tournaments. Watch League of Legends, Valorant, CS2, and more gaming content." />
+    <meta name="description" content="The future of esports streaming is coming soon. Join our early access list to be the first to discover the ultimate platform for live gaming content." />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
@@ -19,83 +19,18 @@ const { title } = Astro.props;
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://esportsstream.app/" />
-    <meta property="og:title" content="EsportsStream - Discover Live Gaming Streams" />
-    <meta property="og:description" content="Discover live esports streams from top gamers and tournaments. Watch League of Legends, Valorant, CS2, and more gaming content." />
+    <meta property="og:title" content="EsportsStream - Coming Soon" />
+    <meta property="og:description" content="The future of esports streaming is coming soon. Join our early access list to be the first to discover the ultimate platform for live gaming content." />
     
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content="https://esportsstream.app/" />
-    <meta property="twitter:title" content="EsportsStream - Discover Live Gaming Streams" />
-    <meta property="twitter:description" content="Discover live esports streams from top gamers and tournaments. Watch League of Legends, Valorant, CS2, and more gaming content." />
+    <meta property="twitter:title" content="EsportsStream - Coming Soon" />
+    <meta property="twitter:description" content="The future of esports streaming is coming soon. Join our early access list to be the first to discover the ultimate platform for live gaming content." />
   </head>
-  <body class="bg-dark-bg text-white font-gaming">
-    <nav class="fixed top-0 w-full z-50 bg-dark-bg/90 backdrop-blur-sm border-b border-dark-border">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between items-center h-16">
-          <div class="flex items-center space-x-2">
-            <div class="w-8 h-8 bg-gaming-green rounded-lg flex items-center justify-center">
-              <span class="text-dark-bg font-bold text-sm">ES</span>
-            </div>
-            <span class="text-xl font-bold">EsportsStream</span>
-          </div>
-          
-          <div class="hidden md:flex items-center space-x-8">
-            <a href="#features" class="text-gray-300 hover:text-gaming-green transition-colors">Features</a>
-            <a href="#preview" class="text-gray-300 hover:text-gaming-green transition-colors">Preview</a>
-            <a href="#download" class="text-gray-300 hover:text-gaming-green transition-colors">Download</a>
-          </div>
-          
-          <div class="flex items-center space-x-4">
-            <a href="#download" class="bg-gaming-green text-dark-bg px-4 py-2 rounded-lg font-semibold hover:bg-gaming-green/90 transition-colors">
-              Get App
-            </a>
-          </div>
-        </div>
-      </div>
-    </nav>
-    
-    <main>
+  <body class="bg-dark-bg text-white font-gaming overflow-hidden">
+    <main class="h-screen">
       <slot />
     </main>
-    
-    <footer class="bg-dark-card border-t border-dark-border">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div class="col-span-1 md:col-span-2">
-            <div class="flex items-center space-x-2 mb-4">
-              <div class="w-8 h-8 bg-gaming-green rounded-lg flex items-center justify-center">
-                <span class="text-dark-bg font-bold text-sm">ES</span>
-              </div>
-              <span class="text-xl font-bold">EsportsStream</span>
-            </div>
-            <p class="text-gray-400 max-w-md">
-              Discover live esports streams from top gamers and tournaments. Never miss your favorite gaming content.
-            </p>
-          </div>
-          
-          <div>
-            <h3 class="text-white font-semibold mb-4">App</h3>
-            <ul class="space-y-2 text-gray-400">
-              <li><a href="#features" class="hover:text-gaming-green transition-colors">Features</a></li>
-              <li><a href="#preview" class="hover:text-gaming-green transition-colors">Preview</a></li>
-              <li><a href="#download" class="hover:text-gaming-green transition-colors">Download</a></li>
-            </ul>
-          </div>
-          
-          <div>
-            <h3 class="text-white font-semibold mb-4">Support</h3>
-            <ul class="space-y-2 text-gray-400">
-              <li><a href="#" class="hover:text-gaming-green transition-colors">Help Center</a></li>
-              <li><a href="#" class="hover:text-gaming-green transition-colors">Contact Us</a></li>
-              <li><a href="#" class="hover:text-gaming-green transition-colors">Privacy Policy</a></li>
-            </ul>
-          </div>
-        </div>
-        
-        <div class="border-t border-dark-border mt-12 pt-8 text-center text-gray-400">
-          <p>&copy; 2024 EsportsStream. All rights reserved.</p>
-        </div>
-      </div>
-    </footer>
   </body>
 </html>
