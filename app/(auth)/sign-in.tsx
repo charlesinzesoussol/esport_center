@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   View,
   Text,
@@ -12,7 +12,7 @@ import {
   Platform,
   ScrollView,
 } from 'react-native';
-import { useSignIn, useOAuth } from '@clerk/clerk-expo';
+import { useSignIn, useOAuth, useAuth } from '@clerk/clerk-expo';
 import { Link, useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import * as WebBrowser from 'expo-web-browser';
@@ -22,6 +22,7 @@ WebBrowser.maybeCompleteAuthSession();
 
 export default function SignInScreen() {
   const { signIn, setActive, isLoaded } = useSignIn();
+  const { isSignedIn } = useAuth();
   const { startOAuthFlow } = useOAuth({ strategy: 'oauth_google' });
   const router = useRouter();
 
@@ -48,7 +49,10 @@ export default function SignInScreen() {
 
       if (signInAttempt.status === 'complete') {
         await setActive({ session: signInAttempt.createdSessionId });
-        router.replace('/(tabs)/esport');
+        // Wait for auth state to propagate before navigating
+        setTimeout(() => {
+          navigateToApp();
+        }, 200);
       } else {
         // Handle additional verification steps if needed
         console.error('Sign-in incomplete:', signInAttempt);
@@ -71,24 +75,104 @@ export default function SignInScreen() {
     }
   };
 
+  // Enhanced navigation function with auth state monitoring
+  const navigateToApp = useCallback(async () => {
+    console.log('🏠 Attempting navigation to main app...');
+    
+    // Use a more reliable approach with multiple checks
+    let attempts = 0;
+    const maxAttempts = 10;
+    const checkInterval = 200;
+    
+    const checkAuthAndNavigate = () => {
+      attempts++;
+      console.log(`🔍 Navigation attempt ${attempts}/${maxAttempts}`);
+      
+      if (isSignedIn) {
+        console.log('✅ Auth state confirmed, navigating to app');
+        router.replace('/(tabs)/esport');
+        return true;
+      }
+      
+      if (attempts < maxAttempts) {
+        setTimeout(checkAuthAndNavigate, checkInterval);
+      } else {
+        console.error('❌ Navigation timeout - auth state not confirmed');
+        Alert.alert(
+          'Navigation Error',
+          'Authentication was successful but navigation failed. Please restart the app.',
+          [{ text: 'OK', onPress: () => router.replace('/') }]
+        );
+      }
+      
+      return false;
+    };
+    
+    checkAuthAndNavigate();
+  }, [isSignedIn, router]);
+
   const onGoogleSignIn = async () => {
     if (oauthLoading) return;
     
     setOauthLoading(true);
+    console.log('🚀 Starting Google OAuth flow...');
     
     try {
-      const { createdSessionId, setActive: oauthSetActive } = await startOAuthFlow();
+      const { createdSessionId, setActive: oauthSetActive, signIn: signInResult, signUp: signUpResult } = await startOAuthFlow();
       
-      if (createdSessionId && oauthSetActive) {
-        await oauthSetActive({ session: createdSessionId });
-        router.replace('/(tabs)/esport');
+      console.log('🔐 OAuth flow result:', { 
+        createdSessionId: !!createdSessionId, 
+        setActive: !!oauthSetActive,
+        signIn: !!signInResult,
+        signUp: !!signUpResult,
+        currentAuthState: isSignedIn
+      });
+      
+      if (createdSessionId) {
+        console.log('✅ Session created, activating...');
+        
+        try {
+          // Use the returned setActive function OR fallback to the hook's setActive
+          const activateSession = oauthSetActive || setActive;
+          
+          if (!activateSession) {
+            throw new Error('No setActive function available');
+          }
+          
+          // Activate the session with proper error handling
+          await activateSession({ session: createdSessionId });
+          console.log('✅ Session activated successfully');
+          
+          // Wait a bit for auth state to propagate, then navigate
+          setTimeout(() => {
+            navigateToApp();
+          }, 300);
+          
+        } catch (activationError: any) {
+          console.error('❌ Session activation error:', activationError);
+          throw new Error(`Session activation failed: ${activationError.message}`);
+        }
+      } else {
+        console.error('❌ No session created from OAuth flow');
+        throw new Error('Google sign-in was incomplete - no session created');
       }
     } catch (err: any) {
-      console.error('Google OAuth error:', err);
+      console.error('❌ Google OAuth error:', err);
       
       // Don't show alert for user cancellation
-      if (err.code !== 'oauth_error' && err.code !== 'user_cancelled') {
-        Alert.alert('OAuth Error', 'Failed to sign in with Google. Please try again.');
+      if (err.code !== 'oauth_error' && err.code !== 'user_cancelled' && err.message !== 'User cancelled') {
+        let errorMessage = 'Failed to sign in with Google. Please try again.';
+        
+        // Handle specific OAuth errors
+        if (err.code === 'oauth_callback_error') {
+          errorMessage = 'OAuth callback failed. Please check your internet connection and try again.';
+        } else if (err.message?.includes('Session activation failed')) {
+          errorMessage = 'Sign-in was successful but session activation failed. Please restart the app.';
+        } else if (err.message?.includes('no session created')) {
+          errorMessage = 'Google sign-in was incomplete. Please try again.';
+        }
+        
+        Alert.alert('OAuth Error', errorMessage);
       }
     } finally {
       setOauthLoading(false);

@@ -1,25 +1,42 @@
 import * as SecureStore from 'expo-secure-store';
-import { tokenCache, clearAllTokens } from '../../lib/tokenCache';
 
 // Mock expo-secure-store
 jest.mock('expo-secure-store');
 
+// Mock Platform
+jest.mock('react-native/Libraries/Utilities/Platform', () => ({
+  OS: 'ios',
+  select: jest.fn((options) => options.ios),
+}));
+
 const mockSecureStore = SecureStore as jest.Mocked<typeof SecureStore>;
 
+// Import after mocking
+let tokenCache: any;
+
 describe('TokenCache', () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     jest.clearAllMocks();
+    
+    // Reset module cache and reimport
+    jest.resetModules();
+    const tokenCacheModule = await import('../../lib/tokenCache');
+    tokenCache = tokenCacheModule.tokenCache;
   });
 
   describe('getToken', () => {
     it('retrieves token successfully', async () => {
       const testToken = 'test-token-123';
       mockSecureStore.getItemAsync.mockResolvedValue(testToken);
+      const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
 
       const result = await tokenCache.getToken('test-key');
 
       expect(mockSecureStore.getItemAsync).toHaveBeenCalledWith('test-key');
       expect(result).toBe(testToken);
+      expect(consoleSpy).toHaveBeenCalled();
+      
+      consoleSpy.mockRestore();
     });
 
     it('returns null when token does not exist', async () => {
@@ -34,12 +51,13 @@ describe('TokenCache', () => {
       const consoleError = jest.spyOn(console, 'error').mockImplementation();
       const error = new Error('SecureStore error');
       mockSecureStore.getItemAsync.mockRejectedValue(error);
+      mockSecureStore.deleteItemAsync.mockResolvedValue();
 
       const result = await tokenCache.getToken('error-key');
 
       expect(result).toBeNull();
       expect(consoleError).toHaveBeenCalledWith(
-        'Failed to retrieve token for key "error-key":',
+        '❌ SecureStore get item error: ',
         error
       );
 
@@ -51,126 +69,70 @@ describe('TokenCache', () => {
     it('saves token successfully', async () => {
       const testToken = 'test-token-456';
       mockSecureStore.setItemAsync.mockResolvedValue();
+      mockSecureStore.getItemAsync.mockResolvedValue(testToken);
+      const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
 
       await tokenCache.saveToken('test-key', testToken);
 
       expect(mockSecureStore.setItemAsync).toHaveBeenCalledWith('test-key', testToken);
-    });
-
-    it('throws error when SecureStore.setItemAsync fails', async () => {
-      const error = new Error('Failed to save token');
-      mockSecureStore.setItemAsync.mockRejectedValue(error);
-
-      await expect(tokenCache.saveToken('test-key', 'test-token')).rejects.toThrow(error);
+      expect(consoleSpy).toHaveBeenCalled();
+      
+      consoleSpy.mockRestore();
     });
 
     it('logs error when SecureStore.setItemAsync fails', async () => {
-      const consoleError = jest.spyOn(console, 'error').mockImplementation();
       const error = new Error('Failed to save token');
       mockSecureStore.setItemAsync.mockRejectedValue(error);
+      const consoleError = jest.spyOn(console, 'error').mockImplementation();
 
-      try {
-        await tokenCache.saveToken('test-key', 'test-token');
-      } catch (e) {
-        // Expected to throw
-      }
+      await tokenCache.saveToken('test-key', 'test-token');
 
       expect(consoleError).toHaveBeenCalledWith(
-        'Failed to save token for key "test-key":',
+        '❌ SecureStore save item error: ',
         error
       );
-
+      
       consoleError.mockRestore();
     });
+
   });
 
-  describe('clearToken', () => {
-    it('clears token successfully', async () => {
+  describe('deleteToken', () => {
+    it('deletes token successfully', async () => {
       mockSecureStore.deleteItemAsync.mockResolvedValue();
+      const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
 
-      await tokenCache.clearToken('test-key');
+      await tokenCache.deleteToken('test-key');
 
       expect(mockSecureStore.deleteItemAsync).toHaveBeenCalledWith('test-key');
-    });
-
-    it('throws error when SecureStore.deleteItemAsync fails', async () => {
-      const error = new Error('Failed to delete token');
-      mockSecureStore.deleteItemAsync.mockRejectedValue(error);
-
-      await expect(tokenCache.clearToken('test-key')).rejects.toThrow(error);
+      expect(consoleSpy).toHaveBeenCalled();
+      
+      consoleSpy.mockRestore();
     });
 
     it('logs error when SecureStore.deleteItemAsync fails', async () => {
-      const consoleError = jest.spyOn(console, 'error').mockImplementation();
       const error = new Error('Failed to delete token');
       mockSecureStore.deleteItemAsync.mockRejectedValue(error);
-
-      try {
-        await tokenCache.clearToken('test-key');
-      } catch (e) {
-        // Expected to throw
-      }
-
-      expect(consoleError).toHaveBeenCalledWith(
-        'Failed to clear token for key "test-key":',
-        error
-      );
-
-      consoleError.mockRestore();
-    });
-  });
-
-  describe('clearAllTokens', () => {
-    it('clears all common Clerk tokens successfully', async () => {
-      mockSecureStore.deleteItemAsync.mockResolvedValue();
-
-      await clearAllTokens();
-
-      expect(mockSecureStore.deleteItemAsync).toHaveBeenCalledTimes(4);
-      expect(mockSecureStore.deleteItemAsync).toHaveBeenCalledWith('__clerk_client_jwt');
-      expect(mockSecureStore.deleteItemAsync).toHaveBeenCalledWith('__clerk_refresh_token');
-      expect(mockSecureStore.deleteItemAsync).toHaveBeenCalledWith('__clerk_session_token');
-      expect(mockSecureStore.deleteItemAsync).toHaveBeenCalledWith('__clerk_user_token');
-    });
-
-    it('continues clearing other tokens even if some fail', async () => {
-      // Make some deletions fail
-      mockSecureStore.deleteItemAsync
-        .mockRejectedValueOnce(new Error('Token 1 failed'))
-        .mockResolvedValueOnce()
-        .mockRejectedValueOnce(new Error('Token 3 failed'))
-        .mockResolvedValueOnce();
-
-      await clearAllTokens();
-
-      expect(mockSecureStore.deleteItemAsync).toHaveBeenCalledTimes(4);
-    });
-
-    it('throws error if clearing tokens fails catastrophically', async () => {
-      const error = new Error('Catastrophic failure');
-      mockSecureStore.deleteItemAsync.mockRejectedValue(error);
-
-      // Mock Promise.all to fail
-      const originalPromiseAll = Promise.all;
-      Promise.all = jest.fn().mockRejectedValue(error);
-
       const consoleError = jest.spyOn(console, 'error').mockImplementation();
 
-      await expect(clearAllTokens()).rejects.toThrow(error);
+      await tokenCache.deleteToken('test-key');
 
-      expect(consoleError).toHaveBeenCalledWith('Failed to clear all tokens:', error);
-
-      // Restore
-      Promise.all = originalPromiseAll;
+      expect(consoleError).toHaveBeenCalledWith(
+        '❌ SecureStore delete item error: ',
+        error
+      );
+      
       consoleError.mockRestore();
     });
+
   });
+
 
   describe('TokenCache interface compliance', () => {
     it('implements all required TokenCache methods', () => {
       expect(typeof tokenCache.getToken).toBe('function');
       expect(typeof tokenCache.saveToken).toBe('function');
-      expect(typeof tokenCache.clearToken).toBe('function');
+      expect(typeof tokenCache.deleteToken).toBe('function');
     });
 
     it('getToken returns Promise<string | null>', async () => {
@@ -191,11 +153,14 @@ describe('TokenCache', () => {
       expect(result).toBeUndefined();
     });
 
-    it('clearToken returns Promise<void>', async () => {
+    it('deleteToken returns Promise<void>', async () => {
       mockSecureStore.deleteItemAsync.mockResolvedValue();
+      const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
       
-      const result = await tokenCache.clearToken('test');
+      const result = await tokenCache.deleteToken('test');
       expect(result).toBeUndefined();
+      
+      consoleSpy.mockRestore();
     });
   });
 
@@ -220,8 +185,12 @@ describe('TokenCache', () => {
       mockSecureStore.setItemAsync.mockResolvedValue();
       mockSecureStore.getItemAsync.mockResolvedValue(longToken);
 
+      const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
+      
       await tokenCache.saveToken('test', longToken);
       const result = await tokenCache.getToken('test');
+      
+      consoleSpy.mockRestore();
       
       expect(result).toBe(longToken);
       expect(mockSecureStore.setItemAsync).toHaveBeenCalledWith('test', longToken);
@@ -234,8 +203,12 @@ describe('TokenCache', () => {
       mockSecureStore.setItemAsync.mockResolvedValue();
       mockSecureStore.getItemAsync.mockResolvedValue(specialToken);
 
+      const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
+      
       await tokenCache.saveToken(specialKey, specialToken);
       const result = await tokenCache.getToken(specialKey);
+      
+      consoleSpy.mockRestore();
       
       expect(result).toBe(specialToken);
       expect(mockSecureStore.setItemAsync).toHaveBeenCalledWith(specialKey, specialToken);

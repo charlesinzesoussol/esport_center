@@ -2,6 +2,7 @@ import { ClerkProvider } from '@clerk/clerk-expo';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Slot } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
+import { useEffect } from 'react';
 import { tokenCache } from '../lib/tokenCache';
 
 // Create a global query client with optimized defaults for mobile
@@ -29,6 +30,19 @@ if (!publishableKey) {
 }
 
 export default function RootLayout() {
+  useEffect(() => {
+    console.log('🚀 RootLayout mounted - App starting...');
+    console.log('🔐 Clerk publishable key configured:', !!publishableKey);
+    console.log('📱 TokenCache available:', !!tokenCache);
+    
+    // Log environment info
+    console.log('⚙️ Environment Info:', {
+      nodeEnv: process.env.NODE_ENV,
+      platform: process.env.EXPO_PLATFORM,
+      router: 'expo-router'
+    });
+  }, []);
+
   return (
     <ClerkProvider 
       publishableKey={publishableKey} 
