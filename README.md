@@ -1,287 +1,97 @@
-# React Native Expo Go - Esports Center
+# EsportsStream
 
-A comprehensive React Native mobile application built with Expo Go for esports center management. This app provides tournament management, player profiles, team coordination, and real-time match tracking capabilities.
+**The future of esports streaming discovery is coming soon.**
 
-> **Built with React Native + Expo Go for rapid development and hot reloading.**
+Never miss your favorite gaming moments again. We're building the ultimate mobile platform to discover, watch, and connect with live esports content across all major titles.
 
-## 🚀 Quick Start
+## 🎯 What We're Building
 
+**Smart Stream Discovery**
+- Find live streams instantly across League of Legends, Valorant, CS2, Dota 2, and more
+- Personalized recommendations based on your gaming interests
+- Real-time notifications when your favorite streamers go live
+
+**Mobile-First Experience**
+- Dark gaming-optimized interface designed for long viewing sessions
+- Seamless video playback with chat integration
+- Offline mode to save streams for later viewing
+
+**Community Features**
+- Follow your favorite streamers and tournaments
+- Custom watch lists and stream collections
+- Share epic moments with friends
+
+## 🚀 Current Status
+
+This repository contains our **coming soon landing page** to gauge interest and collect early access signups.
+
+- Built with **Astro** + **Tailwind CSS** for optimal performance
+- Single-page, no-scroll design focused on email collection
+- Gaming-themed dark aesthetic with modern animations
+- Mobile-responsive and optimized for all devices
+
+## 📱 Landing Page
+
+Visit the live demo at **http://localhost:4324/** (when running locally)
+
+### Quick Start
 ```bash
-# 1. Clone the repository
 git clone https://github.com/charlesinzesoussol/esport_center.git
 cd esport_center
-
-# 2. Install dependencies
 npm install
-
-# 3. Start the Expo development server
-npx expo start
-
-# 4. Open the Expo Go app on your device and scan the QR code
-# Or press 'i' for iOS simulator, 'a' for Android emulator
+npm start
 ```
 
-## 📚 Table of Contents
+## 🎮 The Vision
 
-- [What is this App?](#what-is-this-app)
-- [Project Structure](#project-structure)
-- [Development Setup](#development-setup)
-- [Available Scripts](#available-scripts)
-- [Building for Production](#building-for-production)
-- [Testing](#testing)
-- [Best Practices](#best-practices)
+**Problem**: Gamers waste time jumping between platforms to find quality esports content
 
-## What is this App?
+**Solution**: One app that intelligently surfaces the best live gaming content based on your preferences
 
-The Esports Center app is a complete mobile solution for managing esports tournaments and player communities:
+**Market**: 3+ billion gamers worldwide, with esports viewership growing 10% year-over-year
 
-### Core Features
+## 💡 Why This Will Win
 
-**Tournament Management:**
-- Create and manage tournaments
-- Real-time bracket updates
-- Live match scoring and tracking
+- **Mobile-first** approach (most gaming content consumed on mobile)
+- **AI-powered** discovery reduces decision fatigue
+- **Cross-platform** support for all major streaming services
+- **Community-driven** features that existing platforms lack
 
-**Player Profiles:**
-- Player statistics and rankings
-- Achievement tracking
-- Match history
+## 📊 Early Validation
 
-**Team Coordination:**
-- Team creation and management
-- Communication tools
-- Strategy planning
+- Landing page collecting early access emails
+- Target: 1,000+ signups before MVP development
+- Direct feedback from gaming communities
 
-## Project Structure
+## 🛠 Tech Stack
 
-```
-esport_center/
-├── app/                    # Expo Router app directory
-│   ├── (tabs)/            # Tab-based navigation screens
-│   ├── tournament/        # Tournament-related screens
-│   ├── player/           # Player profile screens
-│   └── _layout.tsx       # Root layout configuration
-├── components/           # Reusable UI components
-│   ├── ui/              # Basic UI components
-│   ├── forms/           # Form components
-│   └── tournament/      # Tournament-specific components
-├── hooks/               # Custom React hooks
-├── utils/               # Utility functions
-├── constants/           # App constants and configuration
-├── assets/              # Images, fonts, and other static assets
-└── types/               # TypeScript type definitions
-```
+**Landing Page (Current)**
+- Astro 4.x for static site generation
+- Tailwind CSS for gaming-themed styling
+- TypeScript for type safety
+- Local storage for email collection
 
-## Development Setup
+**Mobile App (Planned)**
+- React Native with Expo for cross-platform development
+- Real-time streaming APIs integration
+- Push notifications for live alerts
+- Offline-first architecture
 
-### Prerequisites
+## 🎯 Next Steps
 
-- **Node.js** 18+ and npm
-- **Expo CLI**: `npm install -g @expo/cli`
-- **Expo Go app** on your mobile device
-- **iOS Simulator** (macOS) or **Android Studio** (for emulators)
+1. **Validate Interest** - Collect 1,000+ early access emails
+2. **MVP Development** - Build core streaming discovery features
+3. **Beta Testing** - Launch with select gaming communities
+4. **Scale & Monetize** - Premium features and partnerships
 
-### Installation
+## 📈 Business Model
 
-```bash
-# Install dependencies
-npm install
+- **Freemium**: Basic discovery free, premium features paid
+- **Partnerships**: Revenue sharing with streaming platforms
+- **Creator Tools**: Monetization features for streamers
 
-# Start development server
-npx expo start
+---
 
-# Development commands
-npx expo start --ios          # iOS simulator
-npx expo start --android      # Android emulator
-npx expo start --web          # Web browser
-npx expo start --tunnel       # Tunnel for external access
-```
+**Ready to revolutionize esports streaming?** 
 
-## Available Scripts
-
-### Development
-```bash
-npm start              # Start Expo development server
-npm run ios           # Run on iOS simulator
-npm run android       # Run on Android emulator
-npm run web           # Run in web browser
-```
-
-### Testing
-```bash
-npm test              # Run Jest tests
-npm run test:watch    # Run tests in watch mode
-npm run test:coverage # Generate coverage report
-npm run test:e2e      # Run end-to-end tests with Detox
-```
-
-### Code Quality
-```bash
-npm run lint          # Run ESLint
-npm run lint:fix      # Fix ESLint issues
-npm run type-check    # TypeScript type checking
-npm run format        # Format code with Prettier
-```
-
-### Building
-```bash
-npm run build         # Create production build
-npm run build:ios     # Build for iOS
-npm run build:android # Build for Android
-npm run preview       # Preview production build
-```
-
-## Building for Production
-
-### Expo Application Services (EAS)
-
-```bash
-# Install EAS CLI
-npm install -g eas-cli
-
-# Configure EAS
-eas build:configure
-
-# Build for both platforms
-eas build --platform all
-
-# Build for specific platform
-eas build --platform ios
-eas build --platform android
-
-# Submit to app stores
-eas submit --platform ios
-eas submit --platform android
-```
-
-### Local Development Build
-
-```bash
-# Create development build
-npx expo run:ios
-npx expo run:android
-
-# Create production build locally
-npx expo export
-```
-
-## Testing
-
-### Unit Testing with Jest
-
-```typescript
-// components/__tests__/PlayerCard.test.tsx
-import React from 'react';
-import { render } from '@testing-library/react-native';
-import { PlayerCard } from '../PlayerCard';
-
-describe('PlayerCard', () => {
-  it('displays player information correctly', () => {
-    const player = { id: '1', name: 'ProGamer', rank: 'Diamond' };
-    const { getByText } = render(<PlayerCard player={player} />);
-    
-    expect(getByText('ProGamer')).toBeTruthy();
-    expect(getByText('Diamond')).toBeTruthy();
-  });
-});
-```
-
-### E2E Testing with Detox
-
-```typescript
-// e2e/tournament.test.ts
-describe('Tournament Flow', () => {
-  beforeAll(async () => {
-    await device.launchApp();
-  });
-
-  it('should create a new tournament', async () => {
-    await element(by.id('create-tournament-btn')).tap();
-    await element(by.id('tournament-name')).typeText('Spring Championship');
-    await element(by.id('submit-btn')).tap();
-    
-    await expect(element(by.text('Spring Championship'))).toBeVisible();
-  });
-});
-```
-
-## Technology Stack
-
-- **Framework**: React Native with Expo Go
-- **Navigation**: Expo Router (file-based routing)
-- **State Management**: Zustand / React Query
-- **UI Components**: Expo UI + Custom components
-- **Styling**: Nativewind (Tailwind for React Native)
-- **Database**: Firebase Firestore
-- **Authentication**: Firebase Auth
-- **Real-time**: Firebase Realtime Database
-- **Testing**: Jest + React Native Testing Library + Detox
-- **Build**: Expo Application Services (EAS)
-
-## Best Practices
-
-### Component Development
-- Use TypeScript for all components
-- Implement proper error boundaries
-- Follow React Native performance patterns
-- Use memo() for expensive components
-
-### State Management
-- Use React Query for server state
-- Zustand for client state
-- Implement proper loading and error states
-- Cache data appropriately
-
-### Styling
-- Use Nativewind for consistent styling
-- Implement responsive design patterns
-- Support dark mode
-- Follow platform-specific design guidelines
-
-### Performance
-- Optimize FlatList usage
-- Implement lazy loading
-- Use React.memo strategically
-- Monitor bundle size
-
-## Environment Configuration
-
-```bash
-# .env.example
-EXPO_PUBLIC_API_URL=https://api.esportscenter.com
-EXPO_PUBLIC_FIREBASE_API_KEY=your_firebase_api_key
-EXPO_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
-EXPO_PUBLIC_SENTRY_DSN=your_sentry_dsn
-```
-
-## Deployment
-
-### Development
-- Use Expo Go for rapid development
-- Hot reloading for instant feedback
-- Over-the-air updates for quick iterations
-
-### Production
-- EAS Build for app store deployment
-- OTA updates for non-native changes
-- Staged rollouts for safe deployments
-
-## Resources
-
-- [Expo Documentation](https://docs.expo.dev/)
-- [React Native Documentation](https://reactnative.dev/)
-- [Expo Router Documentation](https://expo.github.io/router/)
-- [Firebase Documentation](https://firebase.google.com/docs)
-- [React Query Documentation](https://tanstack.com/query/latest)
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/amazing-feature`
-3. Commit changes: `git commit -m 'Add amazing feature'`
-4. Push to branch: `git push origin feature/amazing-feature`
-5. Open a Pull Request
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
+Get early access at our landing page and be part of the future of gaming content discovery.
