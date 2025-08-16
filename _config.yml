@@ -1,3 +1,7 @@
+# GitHub Pages Configuration
+url: "https://charlesinzesoussol.github.io"
+baseurl: "/esport_center"
+
 #page title
 page_title                                : EsportsStream - Live Gaming Action                                           # Automatically populates with app name if not set and if iOS app ID is set. Otherwise enter manually.
 
@@ -126,6 +130,19 @@ exclude:
   - LICENSE
   - README.md
   - CNAME
+  - node_modules
+  - vendor
+  - .bundle
+  - .sass-cache
+  - .jekyll-cache
+  - Gemfile.lock
+  - package.json
+  - package-lock.json
+  - babel.config.js
+  - metro.config.js
+  - .git
+  - .github
+  - .gitignore
   - vendor
   - _site
   - .bundle
