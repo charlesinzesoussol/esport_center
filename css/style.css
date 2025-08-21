@@ -11,6 +11,7 @@ body{
     color: #222;
     line-height: 1.5;
     font-size: 1.125rem;
+    overflow-x: hidden;
 }
 button, input, optgroup, select, textarea{
     font-family: 'Mukta Mahee', sans-serif;
@@ -71,11 +72,112 @@ section{
   width: 100%;
   margin: 0 auto;
 }
-@media (min-width:576px){
-    .col-fixed{
+/* Mobile First Responsive Design */
+@media (max-width: 575px) {
+    .hero {
+        min-height: auto;
+        height: auto;
+    }
+    
+    .hero h1 span {
+        font-size: 2rem;
+    }
+    
+    .hero h1 small {
+        font-size: 1.5rem;
+    }
+    
+    .col-fixed {
+        position: relative !important;
+        padding: 2rem 1rem;
+        min-height: 60vh;
+    }
+    
+    .vMiddle {
+        max-width: 100%;
+        padding: 0 1rem;
+    }
+    
+    .action-icons {
+        position: relative;
+        bottom: auto;
+        margin-top: 2rem;
+    }
+    
+    .action-icons .col-sm-4 {
+        margin-bottom: 1rem;
+    }
+    
+    #main-offer-form {
+        max-width: 100%;
+        padding: 1rem;
+    }
+    
+    .container {
+        padding: 1rem;
+    }
+    
+    .col-sm-10 {
+        padding: 1rem;
+    }
+    
+    .form-control {
+        height: 3.5rem;
+        font-size: 16px;
+    }
+    
+    .btn-lg {
+        padding: 1rem 2rem;
+        font-size: 1rem;
+    }
+}
+
+/* Tablet Design */
+@media (min-width: 576px) and (max-width: 991px) {
+    .col-fixed {
+        position: relative !important;
+        padding: 3rem 2rem;
+        min-height: 50vh;
+    }
+    
+    .hero h1 span {
+        font-size: 2.5rem;
+    }
+    
+    .hero h1 small {
+        font-size: 2rem;
+    }
+    
+    .action-icons {
+        position: relative;
+        bottom: auto;
+        margin-top: 2rem;
+    }
+    
+    #main-offer-form {
+        max-width: 35rem;
+    }
+}
+
+/* Desktop Design */
+@media (min-width: 992px) {
+    .col-fixed {
         position: fixed;
         top: 0;
         bottom: 0;
+        padding: 2rem;
+    }
+    
+    .hero {
+        height: 100vh;
+        min-height: 700px;
+    }
+    
+    .action-icons {
+        position: absolute;
+        bottom: 4rem;
+        width: 100%;
+        left: 0;
     }
 }
 .form-control{
@@ -247,4 +349,126 @@ label{
 .border-none{
     border: none !important;
     border-color: transparent !important;
+}
+
+/* Additional Mobile Optimizations */
+@media (max-width: 575px) {
+    /* Improve touch targets */
+    .btn {
+        min-height: 44px;
+        padding: 12px 24px;
+    }
+    
+    /* Better spacing */
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+    
+    /* Prevent zoom on input focus */
+    input[type="text"],
+    input[type="email"],
+    input[type="number"],
+    textarea {
+        font-size: 16px !important;
+    }
+    
+    /* Stack contact icons vertically */
+    .action-icons .row {
+        flex-direction: column;
+    }
+    
+    .action-icons .col-sm-4 {
+        width: 100%;
+        max-width: 100%;
+        flex: 0 0 100%;
+    }
+    
+    /* Improve readability */
+    body {
+        font-size: 1rem;
+    }
+    
+    /* Better button styling */
+    .btn-lg {
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto;
+        display: block;
+    }
+    
+    /* Form improvements */
+    .form-control {
+        border-radius: 8px;
+        padding: 12px 16px;
+    }
+    
+    textarea.form-control {
+        height: 120px;
+        resize: vertical;
+    }
+    
+    /* Hero section padding */
+    .pt-4 {
+        padding-top: 1rem !important;
+    }
+    
+    .pt-5 {
+        padding-top: 2rem !important;
+    }
+    
+    .mt-4 {
+        margin-top: 1.5rem !important;
+    }
+}
+
+/* Landscape phone optimization */
+@media (max-width: 767px) and (orientation: landscape) {
+    .hero {
+        min-height: auto;
+    }
+    
+    .col-fixed {
+        min-height: auto;
+        padding: 1rem;
+    }
+    
+    .action-icons {
+        margin-top: 1rem;
+    }
+}
+
+/* Small tablet adjustments */
+@media (min-width: 576px) and (max-width: 767px) {
+    .hero h1 span {
+        font-size: 2.2rem;
+    }
+    
+    .hero h1 small {
+        font-size: 1.8rem;
+    }
+    
+    .form-control {
+        height: 3.2rem;
+    }
+}
+
+/* Print styles */
+@media print {
+    .hero {
+        height: auto !important;
+        min-height: auto !important;
+    }
+    
+    .col-fixed {
+        position: relative !important;
+    }
+    
+    .action-icons {
+        position: relative !important;
+    }
+    
+    .bg-green,
+    .bg-primary {
+        background-color: #000 !important;
+    }
 }
