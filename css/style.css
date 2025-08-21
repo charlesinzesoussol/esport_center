@@ -1,17 +1,298 @@
+/* MOBILE-FIRST ULTRA-MINIMAL DESIGN 2025 */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 html {
-  font-size: 16px;
+    font-size: 16px;
+    scroll-behavior: smooth;
 }
-html,
+
 body {
-    width: 100%;
-    height: 100%;
-}
-body{
     font-family: 'Mukta Mahee', sans-serif;
-    color: #222;
-    line-height: 1.5;
-    font-size: 1.125rem;
+    line-height: 1.6;
+    color: #333;
+    background: #ffffff;
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* MOBILE-FIRST BASE LAYOUT */
+.hero-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 1rem;
+    text-align: center;
+}
+
+.domain-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.domain-name {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #00c853;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.02em;
+    word-break: break-word;
+}
+
+.domain-subtitle {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 1rem;
+    font-weight: 300;
+}
+
+.domain-description {
+    font-size: 1rem;
+    color: #888;
+    margin-bottom: 2rem;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.cta-section {
+    margin-bottom: 3rem;
+}
+
+.primary-cta {
+    background: #00c853;
+    color: white;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    min-height: 44px;
+    min-width: 200px;
+}
+
+.primary-cta:hover {
+    background: #009624;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 200, 83, 0.3);
+}
+
+.contact-simple {
+    margin-bottom: 2rem;
+}
+
+.contact-email {
+    color: #00c853;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.contact-email:hover {
+    text-decoration: underline;
+}
+
+/* FORM SECTION - MOBILE FIRST */
+.form-section {
+    background: #f8f9fa;
+    padding: 2rem 1rem;
+    margin: 2rem -1rem 0;
+    border-radius: 16px 16px 0 0;
+}
+
+.form-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.form-subtitle {
+    color: #666;
+    margin-bottom: 2rem;
+    font-size: 0.95rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-control {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid #e1e5e9;
+    border-radius: 8px;
+    font-size: 16px;
+    background: white;
+    transition: border-color 0.3s ease;
+    font-family: inherit;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #00c853;
+    box-shadow: 0 0 0 3px rgba(0, 200, 83, 0.1);
+}
+
+.form-control::placeholder {
+    color: #999;
+}
+
+textarea.form-control {
+    height: 120px;
+    resize: vertical;
+}
+
+.submit-btn {
+    width: 100%;
+    background: #00c853;
+    color: white;
+    padding: 1rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-height: 44px;
+}
+
+.submit-btn:hover {
+    background: #009624;
+    transform: translateY(-1px);
+}
+
+/* TABLET BREAKPOINT - 768px+ */
+@media (min-width: 768px) {
+    .hero-container {
+        padding: 3rem 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    
+    .domain-name {
+        font-size: 3.5rem;
+    }
+    
+    .domain-subtitle {
+        font-size: 1.4rem;
+    }
+    
+    .domain-description {
+        font-size: 1.1rem;
+        max-width: 500px;
+    }
+    
+    .form-section {
+        padding: 3rem 2rem;
+        margin: 3rem 0;
+        border-radius: 16px;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+/* DESKTOP BREAKPOINT - 1024px+ */
+@media (min-width: 1024px) {
+    .hero-container {
+        flex-direction: row;
+        align-items: center;
+        padding: 2rem;
+        gap: 4rem;
+    }
+    
+    .domain-section {
+        flex: 1;
+        text-align: left;
+        max-width: 500px;
+    }
+    
+    .domain-name {
+        font-size: 4rem;
+    }
+    
+    .domain-subtitle {
+        font-size: 1.6rem;
+    }
+    
+    .form-section {
+        flex: 1;
+        margin: 0;
+        max-width: 500px;
+    }
+    
+    .submit-btn {
+        width: auto;
+        min-width: 200px;
+    }
+}
+
+/* OVERRIDE BOOTSTRAP CONFLICTS */
+.container-fluid,
+.container {
+    padding: 0;
+    margin: 0;
+    max-width: none;
+}
+
+.row {
+    margin: 0;
+    display: block;
+}
+
+.col-sm-6,
+.col-sm-10,
+.col-sm-4 {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    max-width: 100%;
+    flex: none;
+}
+
+.offset-sm-6,
+.offset-sm-1 {
+    margin-left: 0;
+}
+
+/* HIDE OLD ELEMENTS THAT CAUSE STACKING */
+.bg-alt,
+.bg-faded,
+.col-fixed,
+.vMiddle,
+.action-icons,
+.height-100 {
+    display: none;
+}
+
+/* SHOW ONLY NEW CLEAN STRUCTURE */
+.hero-container,
+.domain-section,
+.form-section {
+    display: flex !important;
+}
+
+.domain-section {
+    display: flex !important;
+    flex-direction: column;
+}
+
+.form-section {
+    display: block !important;
 }
 button, input, optgroup, select, textarea{
     font-family: 'Mukta Mahee', sans-serif;
